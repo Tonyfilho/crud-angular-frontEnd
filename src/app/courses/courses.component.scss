@@ -1,7 +1,15 @@
-
 table {
   width: 100%;
 }
 mat-card {
   padding: 1%;
+}
+
+.spinner {
+  background: rgba($color: #000000, $alpha: 0.20);
+  padding: 25px;
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center;
+
 }
