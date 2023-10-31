@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-toolbar color="primary">Available Courses </mat-toolbar>
+  <table mat-table [dataSource]="coursesList" class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Course</th>
+      <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+    </ng-container>
+
+    <!-- category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let item">{{ item.category }}</td>
+    </ng-container>
+
+    <!-- linha mat-row diz: para cada registro q temos no array Cria-se uma coluna q foi declarado  -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</mat-card>
