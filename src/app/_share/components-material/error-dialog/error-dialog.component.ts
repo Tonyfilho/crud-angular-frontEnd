@@ -10,8 +10,9 @@ import { IErrorsHttpModel } from '../../_models/iErrorsHttp-model';
 })
 export class ErrorDialogComponent {
 
-/**DialogData é o tipo pode ser o Observable de error do service como um string, usaremos o Observable error */
+  /**DialogData é o tipo pode ser o Observable de error do service como um string, usaremos o Observable error
+  ******constructor(@Inject(MAT_DIALOG_DATA) public data: string) {} *****/
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: IErrorsHttpModel) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: IErrorsHttpModel) { }
 
 }
