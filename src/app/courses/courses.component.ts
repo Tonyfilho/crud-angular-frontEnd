@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { ICoursesModel } from '../_share/_models/iCourses-model';
 import { CoursesService } from './courses.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-coursers',
@@ -11,16 +12,25 @@ import { CoursesService } from './courses.service';
 })
 export class CoursesComponent {
 
-  displayedColumns = ['_id','name', 'category']; //collun names
+  displayedColumns = ['_id', 'name', 'category', 'actions']; //collun names
   coursesList$!: Observable<ICoursesModel[]>;
 
-  constructor(private courseService: CoursesService, public dialog: MatDialog) {
-     this.coursesList$ = this.courseService.list();
+  constructor(private courseService: CoursesService, public dialog: MatDialog, private router: Router, private route: ActivatedRoute
+  ) {
+    this.coursesList$ = this.courseService.list().pipe(catchError(e =>  {
+      this.courseService.openDialogError({...e})
+     // return pode ser o of ou throwError
+      return throwError(() => e)
+    }));
 
   }
 
 
+  onAdd() {
+   // this.router.navigate(['courses/new']); Criando Rota relativa, independente do nome "Removeremos o courses"
+    this.router.navigate(['new'], {relativeTo:this.route});
 
+  }
 
 
 }

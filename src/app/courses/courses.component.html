@@ -7,7 +7,7 @@
           The actual rendered columns are set as a property on the row definition" -->
 
       <!-- Id Column -->
-      <ng-container matColumnDef="_id">
+      <ng-container matColumnDef="_id" hidden="true">
         <th mat-header-cell *matHeaderCellDef>Id</th>
         <td mat-cell *matCellDef="let item">{{ item._id }}</td>
       </ng-container>
@@ -17,6 +17,7 @@
         <th mat-header-cell *matHeaderCellDef>Course</th>
         <td mat-cell *matCellDef="let item">{{ item.name }}</td>
       </ng-container>
+
       <!-- category Column -->
       <ng-container matColumnDef="category">
         <th mat-header-cell *matHeaderCellDef>Category</th>
@@ -30,6 +31,24 @@
             >{{ item.category | category }}</mat-icon
           >
         </td>
+      </ng-container>
+      <!-- action Column -->
+      <ng-container matColumnDef="actions">
+        <mat-card-header *matHeaderCellDef="">
+          <button mat-mini-fab color="accent" aria-label="Add Course" (click)="onAdd()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-header>
+        <!-- tem que passar a lista -->
+        <mat-cell *matCellDef="let item">
+          <button mat-icon-button color="primary" aria-label="Update Course">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="warn" aria-label="Delete Course">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
       </ng-container>
 
       <!-- linha mat-row diz: para cada registro q temos no array Cria-se uma coluna q foi declarado  -->

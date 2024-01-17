@@ -5,6 +5,8 @@ import { AppMaterialModule } from '../_share/app-material/app-material.module';
 import { CoursesComponent } from './courses.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../_share/shared.module';
+import { CourseFormComponent } from './course-form/course-form.component';
+
 
 
 
@@ -12,12 +14,14 @@ import { SharedModule } from '../_share/shared.module';
 
 
 const ROUTERS_COURSES: Routes = [
-  {path:"", redirectTo:"coursers"}
+  {path:"",  component: CoursesComponent},
+  {path:"new", component: CourseFormComponent}
 ];
 
 @NgModule({
   declarations: [
-    CoursesComponent
+    CoursesComponent,
+    CourseFormComponent
   ],
   imports: [
     CommonModule,
