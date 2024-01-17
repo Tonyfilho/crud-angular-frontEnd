@@ -4,7 +4,7 @@ import { CoursesComponent } from './courses/courses.component';
 
 const routes: Routes = [
   // { path: "", pathMatch: "full", component: CoursesComponent }, encaso de relativeTo em algum compomente usando o Active Router precisa remover pathMatch
-  { path: "",  component: CoursesComponent },
+  { path: "", component: CoursesComponent },
   { path: "courses", loadChildren: () => import(`./courses/courses.module`).then(m => m.CoursersModule) },
 
 ];

@@ -1,0 +1,33 @@
+mat-card {
+  max-width: 80%;
+  height: 60vh;
+  min-width: 150px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-card-content {
+  width: fit-content;
+  height: 60vh;
+}
+
+mat-form-field {
+  width: 50vw;
+  margin: 1%;
+}
+
+
+.mdc-card__actions  {
+  justify-content: flex-end !important;
+}
+
+.mat-mdc-raised-button {
+  margin: 0.3% !important;
+}
+
+
+
+// .min-width {
+//   width: 100%;
+//   min-width: 150px;
+// }
