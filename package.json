@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.ts",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "tony": "ng s -o"
+    "tony": "ng s -o --proxy-config proxy.config.ts"
   },
   "private": true,
   "dependencies": {

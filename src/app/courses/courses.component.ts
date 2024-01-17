@@ -11,7 +11,7 @@ import { CoursesService } from './courses.service';
 })
 export class CoursesComponent {
 
-  displayedColumns = ['name', 'category']; //collun names
+  displayedColumns = ['_id','name', 'category']; //collun names
   coursesList$!: Observable<ICoursesModel[]>;
 
   constructor(private courseService: CoursesService, public dialog: MatDialog) {
