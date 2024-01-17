@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, delay, first, of, tap } from 'rxjs';
+import { catchError, delay, first, of, tap, throwError } from 'rxjs';
 import { ICoursesModel } from './../_share/_models/iCourses-model';
 import { IErrorsHttpModel } from '../_share/_models/iErrorsHttp-model';
 import { ErrorDialogComponent } from '../_share/components-material/error-dialog/error-dialog.component';
@@ -10,6 +10,7 @@ import { ErrorDialogComponent } from '../_share/components-material/error-dialog
   providedIn: 'root'
 })
 export class CoursesService {
+
   //private readonly API = "./../../assets/_mockup_services/courses.json";
   //private readonly API = "http://localhost:8080/api/courses";
   private readonly API = "api/courses"; //Usaremos o Proxy para resolver o error de CORRs(Corrs é feito por segurança)
@@ -40,5 +41,12 @@ export class CoursesService {
     });
   }
 
+  //save(record: Partial<{ _id?: string | null | undefined; name: string ; category: string  }>) {
+  save(record: ICoursesModel) {
+    return this.http.post<ICoursesModel>(this.API, record).pipe(first(), catchError(e => {
+      this.openDialogError({...e})
+      return throwError(() => console.error(e));
+    }));
+  }
 
 }
