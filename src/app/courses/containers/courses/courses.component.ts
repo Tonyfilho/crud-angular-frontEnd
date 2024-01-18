@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ICoursesModel } from '../_share/_models/iCourses-model';
-import { CoursesService } from './courses.service';
+import { ICoursesModel } from '../../../_share/_models/iCourses-model';
+import { CoursesService } from '../../services/courses.service';
 
 @Component({
   selector: 'app-coursers',

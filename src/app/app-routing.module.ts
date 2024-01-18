@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CoursesComponent } from './courses/courses.component';
+import { CoursesComponent } from './courses/containers/courses/courses.component';
 
 const routes: Routes = [
   // { path: "", pathMatch: "full", component: CoursesComponent }, encaso de relativeTo em algum compomente usando o Active Router precisa remover pathMatch

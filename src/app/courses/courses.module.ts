@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppMaterialModule } from '../_share/app-material/app-material.module';
-import { CoursesComponent } from './courses.component';
+import { CoursesComponent } from './containers/courses/courses.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../_share/shared.module';
 import { CourseFormComponent } from './course-form/course-form.component';

@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ICoursesForms, ICoursesModel, } from 'src/app/_share/_models/iCourses-model';
-import { CoursesService } from '../courses.service';
+import { CoursesService } from '../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 

@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, delay, first, of, tap, throwError } from 'rxjs';
-import { ICoursesModel } from './../_share/_models/iCourses-model';
-import { IErrorsHttpModel } from '../_share/_models/iErrorsHttp-model';
-import { ErrorDialogComponent } from '../_share/components-material/error-dialog/error-dialog.component';
+import { ICoursesModel } from '../../_share/_models/iCourses-model';
+import { IErrorsHttpModel } from '../../_share/_models/iErrorsHttp-model';
+import { ErrorDialogComponent } from '../../_share/components-material/error-dialog/error-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,7 @@ export class CoursesService {
     }));
   }
 
-  
+
   /**Method to load Error Modal */
   openDialogError(errorMsg: IErrorsHttpModel) {
     this.dialog.open(ErrorDialogComponent, {
