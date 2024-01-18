@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../_share/shared.module';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CoursesListComponent } from './courses-list/courses-list.component';
 
 
 
@@ -22,7 +23,8 @@ const ROUTERS_COURSES: Routes = [
 @NgModule({
   declarations: [
     CoursesComponent,
-    CourseFormComponent
+    CourseFormComponent,
+    CoursesListComponent
   ],
   imports: [
     CommonModule,
