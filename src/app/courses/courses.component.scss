@@ -1,9 +1,9 @@
-table {
-  width: 100%;
-}
 mat-card {
-  padding: 1%;
+  max-width: 80%;
+  margin: 2em auto;
+  text-align: center;
 }
+
 
 .spinner {
   background: rgba($color: #000000, $alpha: 0.20);
@@ -14,22 +14,10 @@ mat-card {
 
 }
 
-.td-align {
-  display: flex;
-  align-items: center;
-
-}
-
-// .mat-mdc-row.mdc-data-table__row.cdk-row {
-//   display: flex !important;
-//   align-items: center !important;
-// }
-
-
-// .mdc-data-table__cell  {
-//  display: flex !important;
-//  align-items: center !important;
-
+// .td-align {
+//   display: flex;
+//   align-items: center;
 
 // }
+
 
