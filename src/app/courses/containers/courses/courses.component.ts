@@ -14,20 +14,24 @@ export class CoursesComponent {
 
   coursesList$!: Observable<ICoursesModel[]>;
 
-  constructor(private courseService: CoursesService,  private router: Router, private route: ActivatedRoute
-    ) {
-      this.coursesList$ = this.courseService.list().pipe(catchError(e =>  {
-        this.courseService.openDialogError({...e})
-        // return pode ser o of ou throwError
-        return throwError(() => e)
-      }));
+  constructor(private courseService: CoursesService, private router: Router, private route: ActivatedRoute
+  ) {
+    this.coursesList$ = this.courseService.list().pipe(catchError(e => {
+      this.courseService.openDialogError({ ...e })
+      // return pode ser o of ou throwError
+      return throwError(() => e)
+    }));
 
-    }
+  }
 
-    onAdd(arg0: any) {
-      this.router.navigate(['new'], {relativeTo:this.route});
-    }
+  onAdd(arg0: any) {
+    this.router.navigate(['new'], { relativeTo: this.route });
+  }
 
+  onEdit(course: ICoursesModel) {
+    this.router.navigate(['edit', course._id], { relativeTo: this.route });
+    // this.courseService.findById(oneCourse);
+  }
 
 
 

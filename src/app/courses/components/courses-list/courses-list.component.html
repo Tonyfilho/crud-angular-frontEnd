@@ -43,7 +43,7 @@
 
     <!-- tem que passar a lista -->
     <mat-cell *matCellDef="let item" class="action-column">
-      <button mat-icon-button color="primary" aria-label="Update Course">
+      <button mat-icon-button color="primary" aria-label="Update Course" (click)="onEdit(item)">
         <mat-icon>edit</mat-icon>
       </button>
 
