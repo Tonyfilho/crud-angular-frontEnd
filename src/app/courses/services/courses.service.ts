@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, delay, first, of, tap, throwError } from 'rxjs';
-import { ICoursesModel } from '../../_share/_models/iCourses-model';
+import { Observable, catchError, first, of, throwError } from 'rxjs';
 import { IErrorsHttpModel } from '../../_share/_models/iErrorsHttp-model';
 import { ErrorDialogComponent } from '../../_share/components-material/error-dialog/error-dialog.component';
+import { ICoursesModel } from './../../_share/_models/iCourses-model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class CoursesService {
 /**Dialog fpoi oserviço criado para abrir a PopUp de error, aqui pelo Service sem ter que ir para compoment */
   constructor(private http: HttpClient, public dialog: MatDialog) { }
 
-  list() {
+  list(): Observable<ICoursesModel[]> {
     return this.http.get<ICoursesModel[]>(this.API)
       .pipe(
         first(), //just get 1 subscrition, after that close the conection
@@ -32,8 +32,18 @@ export class CoursesService {
 
   }
 
+  loadById(id:string):Observable<ICoursesModel> {
+    return this.http.get<ICoursesModel>(`${this.API}/${id}`).pipe(
+      first(),
+      catchError(e => {
+        this.openDialogError({ ...e })
+
+        return throwError(() => console.error(e));
+      }))
+  }
+
   //save(record: Partial<{ _id?: string | null | undefined; name: string ; category: string  }>) {
-  save(record: ICoursesModel) {
+  save(record: ICoursesModel): Observable<ICoursesModel> {
     return this.http.post<ICoursesModel>(this.API, record).pipe(first(), catchError(e => {
       this.openDialogError({...e})
       return throwError(() => console.error(e));
