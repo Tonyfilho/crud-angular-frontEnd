@@ -1,0 +1,20 @@
+.mat-table {
+  overflow: auto;
+  max-height: 600px;
+  display: flex;
+}
+
+mat-row  {
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
+  flex: 0 0 70px !important; //jogando tudo para direita
+
+}
+
+mat-header-row  {
+  flex: 0 0 70px !important; //jogando tudo para direita
+//  display: flex;
+//  align-items: center;
+//  justify-content: flex-start;
+}

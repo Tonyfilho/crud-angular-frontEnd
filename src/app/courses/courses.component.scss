@@ -4,6 +4,12 @@ mat-card {
   text-align: center;
 }
 
+.column-flex {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+
+}
 
 .spinner {
   background: rgba($color: #000000, $alpha: 0.20);
