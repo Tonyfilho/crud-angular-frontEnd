@@ -22,7 +22,7 @@ export class CoursesService {
     return this.http.get<ICoursesModel[]>(this.API)
       .pipe(
         first(), //just get 1 subscrition, after that close the conection
-        delay(1000), // create a delay to see the spinner in front 3s
+       // delay(1000), // create a delay to see the spinner in front 3s
         //tap(localCourses => console.log(localCourses)),
         catchError(e => {
           this.openDialogError({ ...e })
