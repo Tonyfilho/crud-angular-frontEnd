@@ -4,17 +4,24 @@
   display: flex;
 }
 
-mat-row  {
-  // display: flex;
-  // align-items: center;
-  // justify-content: flex-start;
-  flex: 0 0 70px !important; //jogando tudo para direita
+// mat-row  {
+//   display: flex !important;
+//   align-items: center !important;
+//   justify-content: flex-start !important;
 
+
+// }
+
+// mat-header-row  {
+
+//  display: flex !important;
+//  align-items: center !important;
+//  justify-content: flex-start !important;
+// }
+
+.action-column-header  {
+  flex: 0 0 100px;
 }
-
-mat-header-row  {
-  flex: 0 0 70px !important; //jogando tudo para direita
-//  display: flex;
-//  align-items: center;
-//  justify-content: flex-start;
+.action-column  {
+  flex: 0 0 105px;
 }
