@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ICoursesForms, ICoursesModel, } from 'src/app/_share/_models/iCourses-model';
 import { CoursesService } from '../courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-course-form',
@@ -12,9 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CourseFormComponent {
   form: ICoursesForms;
-  constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private router: Router) {
+  constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private router: Router, private location: Location) {
     this.form = fb.group({
-
       name: [''],
       category: ['']
     })
@@ -25,8 +25,7 @@ export class CourseFormComponent {
     this.courseService.save(this.form.value as ICoursesModel).subscribe({
       next: res => {
         this.openSnackBar("All right! New Course save.")
-        this.form.reset();
-        this.router.navigate(['/courses']);
+        this.onCancel();
         console.log(res);
       },
       error: err => {
@@ -39,11 +38,12 @@ export class CourseFormComponent {
 
   onCancel() {
     this.form.reset();
-    this.router.navigate(['/courses']);
+    this.location.back();
+    // this.router.navigate(['/courses']); usando o location
 
   }
 
-  openSnackBar(message: string) {
+  private openSnackBar(message: string) {
     this._snackBar.open(message, '', { duration: 5000 });
   }
 

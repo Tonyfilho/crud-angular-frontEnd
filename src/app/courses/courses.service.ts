@@ -32,15 +32,6 @@ export class CoursesService {
 
   }
 
-
-  /**Method to load Error Modal */
-
-  openDialogError(errorMsg: IErrorsHttpModel) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg,
-    });
-  }
-
   //save(record: Partial<{ _id?: string | null | undefined; name: string ; category: string  }>) {
   save(record: ICoursesModel) {
     return this.http.post<ICoursesModel>(this.API, record).pipe(first(), catchError(e => {
@@ -48,5 +39,14 @@ export class CoursesService {
       return throwError(() => console.error(e));
     }));
   }
+
+  
+  /**Method to load Error Modal */
+  openDialogError(errorMsg: IErrorsHttpModel) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg,
+    });
+  }
+
 
 }
