@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, first, of, throwError } from 'rxjs';
-import { IErrorsHttpModel } from '../../_share/_models/iErrorsHttp-model';
-import { ErrorDialogComponent } from '../../_share/components-material/error-dialog/error-dialog.component';
+import { IPopUpHttpModel } from '../../_share/_models/iErrorsHttp-model';
+import { ModalDialogComponent } from '../../_share/components-material/error-dialog/error-dialog.component';
 import { ICoursesModel } from './../../_share/_models/iCourses-model';
 
 @Injectable({
@@ -77,16 +77,16 @@ export class CoursesService {
 
 
   /**Method to load Error Modal */
-  openDialogError(errorMsg: IErrorsHttpModel) {
-    this.dialog.open(ErrorDialogComponent, {
+  openDialogError(errorMsg: IPopUpHttpModel) {
+    this.dialog.open(ModalDialogComponent, {
       data: errorMsg,
     });
   }
-  
+
   /**Method to load Success Modal */
-  openDialogSuccess(errorMsg: IErrorsHttpModel) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg,
+  openDialogSuccess(successMsg: IPopUpHttpModel) {
+    this.dialog.open(ModalDialogComponent, {
+      data: successMsg,
     });
   }
 
