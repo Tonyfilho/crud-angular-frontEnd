@@ -4,6 +4,8 @@ import { Observable, catchError, first, throwError } from 'rxjs';
 import { ICoursesModel } from '../../../_share/_models/iCourses-model';
 import { CoursesService } from '../../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-coursers',
@@ -15,7 +17,11 @@ export class CoursesComponent {
 
   coursesList$!: Observable<ICoursesModel[]>;
 
-  constructor(private courseService: CoursesService, private router: Router, private route: ActivatedRoute, private matSnckBar: MatSnackBar
+  constructor(private courseService: CoursesService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private matSnckBar: MatSnackBar,
+    public dialog: MatDialog
   ) {
     this.reflesh();
   };
@@ -30,15 +36,24 @@ export class CoursesComponent {
   };
 
   onDelete(course: ICoursesModel) {
-    this.courseService.remove(course._id as string).subscribe({
-      next: () => {
-        // this.courseService.openDialogSuccess({ name: 'Uoolll', status: 200, statusText: 'Everything Delete', url: '' });
-        this.matSnckBar.open('Course was Delete!', 'X', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'center' });
-        this.reflesh();
-      },
 
-    });
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: { name: "Are you Sure", color: "accent" },
+      });
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          this.courseService.remove(course._id as string).subscribe({
+            next: () => {
+              this.matSnckBar.open('Course was Delete!', 'X', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'center' });
+              this.reflesh();
+            },
+          });
+        }
+      });
+
   };
+
+
   reflesh() {
     this.coursesList$ = this.courseService.list().pipe(catchError(e => {
       this.courseService.openDialogError({ ...e });

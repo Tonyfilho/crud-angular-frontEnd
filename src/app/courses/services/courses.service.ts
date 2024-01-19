@@ -2,9 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, first, of, throwError } from 'rxjs';
-import { IPopUpHttpModel } from '../../_share/_models/iErrorsHttp-model';
-import { ModalDialogComponent } from '../../_share/components-material/error-dialog/error-dialog.component';
+
+
 import { ICoursesModel } from './../../_share/_models/iCourses-model';
+import { ErrorDialogComponent } from 'src/app/_share/components-material/error-dialog/error-dialog.component';
+import { IErrorsHttpModel } from 'src/app/_share/_models/iErrorsHttp-model';
+import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -77,18 +80,21 @@ export class CoursesService {
 
 
   /**Method to load Error Modal */
-  openDialogError(errorMsg: IPopUpHttpModel) {
-    this.dialog.open(ModalDialogComponent, {
+  openDialogError(errorMsg: IErrorsHttpModel) {
+    this.dialog.open(ErrorDialogComponent, {
       data: errorMsg,
     });
   }
 
-  /**Method to load Success Modal */
-  openDialogSuccess(successMsg: IPopUpHttpModel) {
-    this.dialog.open(ModalDialogComponent, {
-      data: successMsg,
+  openDialog(message: string, color: string): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {name: message, color: color},
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+
+      
     });
   }
-
 
 }
