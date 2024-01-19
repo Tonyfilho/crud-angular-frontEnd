@@ -33,7 +33,8 @@ export class CoursesService {
   }
 
   loadById(id:string):Observable<ICoursesModel> {
-    return this.http.get<ICoursesModel>(`${this.API}/${id}`).pipe(
+    return this.http.get<ICoursesModel>(`${this.API}/${id}`)
+    .pipe(
       first(),
       catchError(e => {
         this.openDialogError({ ...e })

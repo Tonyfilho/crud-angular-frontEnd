@@ -8,7 +8,7 @@ export interface ICoursesModel {
 
 }
 export interface ICoursesForms extends FormGroup< {
-  _id?: FormControl<string | null>;
+  _id: FormControl<string | null>;
   name: FormControl<string | null>;
   category: FormControl<string | null>;
 

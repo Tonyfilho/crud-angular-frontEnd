@@ -1,10 +1,11 @@
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { ICoursesForms, ICoursesModel, } from 'src/app/_share/_models/iCourses-model';
 import { CoursesService } from '../../services/courses.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-course-form',
@@ -12,12 +13,21 @@ import { Location } from '@angular/common';
   styleUrls: ['./course-form.component.scss']
 })
 export class CourseFormComponent {
-  form: ICoursesForms;
-  constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private router: Router, private location: Location) {
-    this.form = fb.group({
-      name: [''],
-      category: ['']
-    })
+  form!: ICoursesForms;
+  constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
+    const localCourse: ICoursesModel = this.route.snapshot.data['course'];
+   //console.log(localCourse.category);
+    this.form = this.fb.group({
+      _id: [''],
+      name: new FormControl(''),
+      category: new FormControl('')
+    });
+    this.form.setValue({
+      _id: localCourse._id as any,
+      name: localCourse.name,
+      category: localCourse.category,
+    });
+
 
   }
 
