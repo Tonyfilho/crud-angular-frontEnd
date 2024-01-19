@@ -13,20 +13,24 @@ export class CoursesListComponent {
   @Input() coursesList!: ICoursesModel[];
   @Output() add = new EventEmitter<boolean>(false);
   @Output() edit = new EventEmitter<ICoursesModel>();
+  @Output() delete = new EventEmitter<ICoursesModel>();
 
 
   constructor(public dialog: MatDialog,
-  ) { }
+    ) { }
 
 
-  onAdd() {
-    // this.router.navigate(['courses/new']); Criando Rota relativa, independente do nome "Removeremos o courses"
-    this.add.emit(true);
-  }
+    onAdd() {
+      // this.router.navigate(['courses/new']); Criando Rota relativa, independente do nome "Removeremos o courses"
+      this.add.emit(true);
+    }
 
 
-  onEdit(oneCourse: ICoursesModel) {
-    this.edit.emit(oneCourse)
+    onEdit(oneCourse: ICoursesModel) {
+      this.edit.emit(oneCourse)
 
-  }
+    }
+    onDelete(course: ICoursesModel) {
+    this.delete.emit(course);
+    }
 }

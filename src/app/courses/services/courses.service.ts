@@ -66,12 +66,25 @@ export class CoursesService {
       return throwError(() => console.error(e));
     }));
   }
+  remove(id: string): Observable<Object> {
+    return this.http.delete(`${this.API}/${id}`).pipe(first(), catchError(e => {
+      this.openDialogError({ ...e })
+      return throwError(() => console.error(e));
+    }));
+  }
 
 
 
 
   /**Method to load Error Modal */
   openDialogError(errorMsg: IErrorsHttpModel) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg,
+    });
+  }
+  
+  /**Method to load Success Modal */
+  openDialogSuccess(errorMsg: IErrorsHttpModel) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg,
     });
