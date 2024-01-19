@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class CourseFormComponent {
   form!: ICoursesForms;
+  localButton: string = "Save"
   constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
     const localCourse: ICoursesModel = this.route.snapshot.data['course'];
    //console.log(localCourse.category);
@@ -28,7 +29,7 @@ export class CourseFormComponent {
       category: localCourse.category,
     });
 
-
+    this.form.get('_id')?.value ? this.localButton = "Update": this.localButton = "Save"
   }
 
   onSubmit() {

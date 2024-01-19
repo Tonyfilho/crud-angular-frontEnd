@@ -6,8 +6,7 @@ import { ICoursesModel } from './../../_share/_models/iCourses-model';
 
 
 export const courseResolver: ResolveFn<Observable<ICoursesModel>> = (route, state) => {
-  // const courseService: CoursesService = Inject(CoursesService);
-
+  // const courseService: CoursesService = Inject(CoursesService); não funciona aqui, tem q ser direto
   if (route.params && route.params['id']) {
     return   inject(CoursesService).loadById(route.params['id']);
   }
