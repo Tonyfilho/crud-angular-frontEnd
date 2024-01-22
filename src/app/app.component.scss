@@ -1,17 +1,11 @@
-.toolbar-tools {
+.toolbar-tool {
   display: flex !important;
   width: 100%;
-
-
-
+  justify-content: space-between;
+  align-items: center;
 }
-
-
 
 .user-avatar {
   max-height: 35px;
   border-radius: 4px;
-
 }
-
-
