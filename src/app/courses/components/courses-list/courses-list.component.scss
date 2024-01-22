@@ -3,25 +3,10 @@
   max-height: 600px;
   display: flex;
 }
-
-// mat-row  {
-//   display: flex !important;
-//   align-items: center !important;
-//   justify-content: flex-start !important;
-
-
-// }
-
-// mat-header-row  {
-
-//  display: flex !important;
-//  align-items: center !important;
-//  justify-content: flex-start !important;
-// }
+.action-column  {
+  flex: 0 0 115px;
+}
 
 .action-column-header  {
-  flex: 0 0 100px;
-}
-.action-column  {
-  flex: 0 0 105px;
+  margin: 0 auto;
 }
