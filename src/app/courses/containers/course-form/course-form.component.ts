@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ICoursesForms, ICoursesModel, } from 'src/app/_share/_models/iCourses-model';
@@ -17,11 +17,11 @@ export class CourseFormComponent {
   localButton: string = "Save"
   constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
     const localCourse: ICoursesModel = this.route.snapshot.data['course'];
-   //console.log(localCourse.category);
+    //console.log(localCourse.category);
     this.form = this.fb.group({
       _id: [''],
-      name: new FormControl(''),
-      category: new FormControl('')
+      name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
+      category: new FormControl('', [Validators.required])
     });
     this.form.setValue({
       _id: localCourse._id as any,
@@ -29,7 +29,7 @@ export class CourseFormComponent {
       category: localCourse.category,
     });
 
-    this.form.get('_id')?.value ? this.localButton = "Update": this.localButton = "Save"
+    this.form.get('_id')?.value ? this.localButton = "Update" : this.localButton = "Save"
   }
 
   onSubmit() {
@@ -57,5 +57,27 @@ export class CourseFormComponent {
   private openSnackBar(message: string) {
     this._snackBar.open(message, '', { duration: 5000 });
   }
+
+
+  getErrorMessage(fieldName: string) {
+    const field = this.form.get(fieldName);
+    if (field?.hasError('required')) {
+      return 'You must enter a value';
+    }
+    if (field?.hasError('minlength')) {
+      const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5; // se tiver retorno a qyantidade, senão retorno o valor padrão
+      return `Min lenght: ${requiredLength}`;
+    }
+    if (field?.hasError('maxlength')) {
+      const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
+      return `Max lenght: ${requiredLength}`;
+    }
+
+    // this.form.getError('name')
+    return 'Not a valid field';
+
+  };
+
+
 
 }

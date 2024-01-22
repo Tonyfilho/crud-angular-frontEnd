@@ -6,7 +6,10 @@
 
           <mat-form-field  >
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Name" formControlName="name" />
+            <input matInput placeholder="Name" formControlName="name" #name/>
+            <mat-hint align="end">{{ name.value?.length || 0 }} /100</mat-hint>
+            <mat-error *ngIf="this.form.get('name')?.invalid">{{getErrorMessage('name')}}</mat-error>
+
           </mat-form-field>
 
 
@@ -17,12 +20,13 @@
               <mat-option value="front-end">Front-End</mat-option>
               <mat-option value="back-end">Back-End</mat-option>
             </mat-select>
+            <mat-error *ngIf="this.form.get('category')?.invalid">{{getErrorMessage('category')}}</mat-error>
           </mat-form-field>
 
       </form>
     </mat-card-content>
     <mat-card-actions   >
-      <button mat-raised-button color="primary" (click)="onSubmit()" >{{ this.localButton }}</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ this.form.get('name')?.invalid || this.form.get('category')?.invalid }}" >{{ this.localButton }}</button>
       <button mat-raised-button (click)="onCancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>
