@@ -11,5 +11,5 @@ export const courseResolver: ResolveFn<Observable<ICoursesModel>> = (route, stat
     return   inject(CoursesService).loadById(route.params['id']);
   }
 //  return of({ _id: '', name: '', caregory: '' } as unknown as Observable<ICoursesModel>);
-  return new Observable<ICoursesModel>(d => d.next({ _id: '', name: '', category: '' }));
+  return new Observable<ICoursesModel>(d => d.next({ _id: '', name: '', category: '' , lesson: []}));
 };

@@ -17,7 +17,7 @@ export class CourseFormComponent {
   localButton: string = "Save"
   constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
     const localCourse: ICoursesModel = this.route.snapshot.data['course'];
-    //console.log(localCourse.category);
+    console.log("localCourse: ",localCourse);
     this.form = this.fb.group({
       _id: [''],
       name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
