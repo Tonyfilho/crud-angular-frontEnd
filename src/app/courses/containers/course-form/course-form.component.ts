@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ICoursesForms, ICourses, } from 'src/app/_share/_models/iCourses-model';
@@ -13,33 +13,41 @@ import { ILessoForms, ILesson } from 'src/app/_share/_models/iLesson-model';
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss']
 })
-export class CourseFormComponent {
-  form!: ICoursesForms;
+export class CourseFormComponent implements OnInit {
+  //form!: ICoursesForms;  /**Foi removido a tipagem pois FormsArray não aceita tipagem, isto esta nas DOCs do Angular */
+  form!: FormGroup;
   localButton: string = "Save"
   constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
+
+  }
+  ngOnInit(): void {
     const localCourse: ICourses = this.route.snapshot.data['course'];
     console.log("localCourse: ", localCourse);
     this.form = this.fb.group({
-      _id: [''],
-      name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
-      category: new FormControl('', [Validators.required])
+      _id: [localCourse._id],
+      name: new FormControl(localCourse.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
+      category: new FormControl(localCourse.category, [Validators.required]),
+      lessons: this.fb.array(this.retrieveLessons(localCourse)),
     });
-    this.form.setValue({
-      _id: localCourse._id as any,
-      name: localCourse.name,
-      category: localCourse.category,
-    });
+    /**O Valor será SETADO direto na criação do Form */
+    // this.form.setValue({
+      //   _id: localCourse._id as any,
+      //   name: localCourse.name,
+      //   category: localCourse.category,
+      // });
 
+    console.log("FORMGROUP", this.form);
+    console.log("FORMVALUE", this.form.value);
     this.form.get('_id')?.value ? this.localButton = "Update" : this.localButton = "Save"
   }
 
   /**Create a FormaArray Methos */
-  private retrieveLessons(course: ICourses) {
-    const localLessons: ILesson[] = [];
-    if (course?.lesson) {
-      course.lesson.forEach(lesson => localLessons.push(this.createLesson(lesson) as unknown as ILesson));
+  private retrieveLessons(course: ICourses): ILessoForms[] {
+    const localLessons: ILessoForms[] = [];
+    if (course?.lessons.length > 0) {
+      course.lessons.forEach(lesson => localLessons.push(this.createLesson(lesson)));
     } else {
-      localLessons.push(this.createLesson as unknown as ILesson);
+      localLessons.push(this.createLesson());
     }
 
     return localLessons;

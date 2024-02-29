@@ -1,19 +1,19 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ILesson } from "./iLesson-model";
+import { ILessoForms, ILesson } from "./iLesson-model";
 
 export interface ICourses {
   _id: string | number;
   name: string;
   category: string;
-  lesson: ILesson [];
+  lessons: ILesson [];
 
 
 }
 export interface ICoursesForms extends FormGroup< {
-  _id: FormControl<string | null>;
+  _id: FormControl<string | number|null>;
   name: FormControl<string | null>;
   category: FormControl<string | null>;
-  lesson?: FormArray<ILesson | any>;
+  lessons?: ILessoForms;
 
 
 }> {}
