@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ICoursesModel } from 'src/app/_share/_models/iCourses-model';
+import { ICourses } from 'src/app/_share/_models/iCourses-model';
 
 @Component({
   selector: 'app-courses-list',
@@ -10,10 +10,10 @@ import { ICoursesModel } from 'src/app/_share/_models/iCourses-model';
 export class CoursesListComponent {
 
   readonly displayedColumns = ['_id', 'name', 'category', 'actions']; //collun names
-  @Input() coursesList!: ICoursesModel[];
+  @Input() coursesList!: ICourses[];
   @Output() add = new EventEmitter<boolean>(false);
-  @Output() edit = new EventEmitter<ICoursesModel>();
-  @Output() delete = new EventEmitter<ICoursesModel>();
+  @Output() edit = new EventEmitter<ICourses>();
+  @Output() delete = new EventEmitter<ICourses>();
 
 
   constructor(public dialog: MatDialog,
@@ -26,11 +26,11 @@ export class CoursesListComponent {
     }
 
 
-    onEdit(oneCourse: ICoursesModel) {
+    onEdit(oneCourse: ICourses) {
       this.edit.emit(oneCourse)
 
     }
-    onDelete(course: ICoursesModel) {
+    onDelete(course: ICourses) {
     this.delete.emit(course);
     }
 }

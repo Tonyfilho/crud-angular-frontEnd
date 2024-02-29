@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { ICoursesForms, ICoursesModel, } from 'src/app/_share/_models/iCourses-model';
+import { ICoursesForms, ICourses, } from 'src/app/_share/_models/iCourses-model';
 import { CoursesService } from '../../services/courses.service';
 import { Observable } from 'rxjs';
+import { ILessoForms, ILesson } from 'src/app/_share/_models/iLesson-model';
 
 @Component({
   selector: 'app-course-form',
@@ -16,8 +17,8 @@ export class CourseFormComponent {
   form!: ICoursesForms;
   localButton: string = "Save"
   constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
-    const localCourse: ICoursesModel = this.route.snapshot.data['course'];
-    console.log("localCourse: ",localCourse);
+    const localCourse: ICourses = this.route.snapshot.data['course'];
+    console.log("localCourse: ", localCourse);
     this.form = this.fb.group({
       _id: [''],
       name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
@@ -32,8 +33,29 @@ export class CourseFormComponent {
     this.form.get('_id')?.value ? this.localButton = "Update" : this.localButton = "Save"
   }
 
+  /**Create a FormaArray Methos */
+  private retrieveLessons(course: ICourses) {
+    const localLessons: ILesson[] = [];
+    if (course?.lesson) {
+      course.lesson.forEach(lesson => localLessons.push(this.createLesson(lesson) as unknown as ILesson));
+    } else {
+      localLessons.push(this.createLesson as unknown as ILesson);
+    }
+
+    return localLessons;
+  }
+
+  /**Create one lesson to form */
+  private createLesson(lesson: ILesson = { id: '', name: '', youtubeUrl: '' }): ILessoForms {
+    return this.fb.group({
+      id: new FormControl(lesson.id),
+      name: [lesson.name],
+      youtubeUrl: [lesson.youtubeUrl]
+    });
+  }
+
   onSubmit() {
-    this.courseService.save(this.form.value as ICoursesModel).subscribe({
+    this.courseService.save(this.form.value as ICourses).subscribe({
       next: res => {
         this.openSnackBar("All right! New Course save.")
         this.onCancel();

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, first, of, throwError } from 'rxjs';
 
 
-import { ICoursesModel } from './../../_share/_models/iCourses-model';
+import { ICourses } from './../../_share/_models/iCourses-model';
 import { ErrorDialogComponent } from 'src/app/_share/components-material/error-dialog/error-dialog.component';
 import { IErrorsHttpModel } from 'src/app/_share/_models/iErrorsHttp-model';
 import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
@@ -21,8 +21,8 @@ export class CoursesService {
   /**Dialog fpoi oserviço criado para abrir a PopUp de error, aqui pelo Service sem ter que ir para compoment */
   constructor(private http: HttpClient, public dialog: MatDialog) { }
 
-  list(): Observable<ICoursesModel[]> {
-    return this.http.get<ICoursesModel[]>(this.API)
+  list(): Observable<ICourses[]> {
+    return this.http.get<ICourses[]>(this.API)
       .pipe(
         first(), //just get 1 subscrition, after that close the conection
         // delay(1000), // create a delay to see the spinner in front 3s
@@ -35,8 +35,8 @@ export class CoursesService {
 
   }
 
-  loadById(id: string): Observable<ICoursesModel> {
-    return this.http.get<ICoursesModel>(`${this.API}/${id}`)
+  loadById(id: string): Observable<ICourses> {
+    return this.http.get<ICourses>(`${this.API}/${id}`)
       .pipe(
         first(),
         catchError(e => {
@@ -47,7 +47,7 @@ export class CoursesService {
   }
 
   //save(record: Partial<{ _id?: string | null | undefined; name: string ; category: string  }>) {
-  save(record: ICoursesModel): Observable<ICoursesModel> {
+  save(record: ICourses): Observable<ICourses> {
     if (!record._id) {
      // console.log("record: ", record._id);
       return this.create(record);
@@ -56,15 +56,15 @@ export class CoursesService {
     return this.update(record);
   }
 
-  private create(record: Partial<ICoursesModel>) {
-    return this.http.post<ICoursesModel>(this.API, record).pipe(first(), catchError(e => {
+  private create(record: Partial<ICourses>) {
+    return this.http.post<ICourses>(this.API, record).pipe(first(), catchError(e => {
       this.openDialogError({ ...e })
       return throwError(() => console.error(e));
     }));
   }
 
-  private update(record: Partial<ICoursesModel>) {
-    return this.http.put<ICoursesModel>(`${this.API}/${record._id}`, record).pipe(first(), catchError(e => {
+  private update(record: Partial<ICourses>) {
+    return this.http.put<ICourses>(`${this.API}/${record._id}`, record).pipe(first(), catchError(e => {
       this.openDialogError({ ...e })
       return throwError(() => console.error(e));
     }));
@@ -93,7 +93,7 @@ export class CoursesService {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
 
-      
+
     });
   }
 

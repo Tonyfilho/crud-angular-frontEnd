@@ -1,3 +1,4 @@
+import { FormControl, FormGroup } from "@angular/forms";
 
 export interface ILesson {
   id: string | number;
@@ -6,3 +7,9 @@ export interface ILesson {
 
 
 }
+export interface ILessoForms extends FormGroup<{
+  id: FormControl<string | number | null>;
+  name: FormControl<string | null>;
+  youtubeUrl: FormControl<string | null>;
+}> {}
+
