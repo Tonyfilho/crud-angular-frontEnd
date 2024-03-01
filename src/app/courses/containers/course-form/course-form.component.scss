@@ -28,16 +28,37 @@ mat-card-content {
   justify-content: space-between;
 }
 
-.lesson-father-child {
+.div-lesson-father-child {
   display: flex;
   justify-content: space-around;
   width: 80vw;
+  flex-wrap: wrap;
 
-  .lesson-child {
+  .table-lesson-child {
     display: flex;
     .mat-form-lesson {
-      width: 25vw;
+      width: 22.9vw;
+      height: 10vh;
+
     }
+    .mat-form-lesson.delete {
+      display:flex;
+      width: 27.1vw;
+      .div-button{
+        
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+
+      }
+    }
+
+
+    // .mat-form-lesson-min {
+    //   width: 4vw;
+    //   min-width: 3vw;
+    //   height: 10vh;
+    // }
 
   }
 }

@@ -24,26 +24,37 @@
           <!-- Lessons -->
           <div class="lesson-father">
             <mat-toolbar color="primary" class="lesson">Lessons Details
-              <button mat-fab color="warn" aria-label="Add Lessons"><mat-icon class="mat-18">add</mat-icon> </button>
+              <button mat-fab color="warn" aria-label="Add Lessons" (click)="addNewLesson()"><mat-icon class="mat-18">add</mat-icon> </button>
             </mat-toolbar>
 
           </div>
-          <div class="lesson-father-child">
-            <table class="lesson-child">
-              <tr>
+          <div class="div-lesson-father-child">
+          <!-- <table class="lesson-child"   formArrayName="lessons" *ngFor="let item of this.form.get('lessons')?.controls as UntypedFormArray"> -->
+            <table class="table-lesson-child"   formArrayName="lessons" *ngFor="let item of this.getLessonsFormArray(); let i = index">
+              <!-- <tr formGroupName="{{i}}"> ou um ou outro -->
+              <tr [formGroupName]="i">
                 <td>
                   <mat-form-field class="mat-form-lesson" >
                     <mat-label>Name Lesson</mat-label>
-                    <input matInput placeholder="Name Lesson" />
+                    <input matInput placeholder="Name Lesson"  formControlName="name"/>
                   </mat-form-field>
                 </td>
                 <td>
-                  <mat-form-field class="mat-form-lesson"  >
+                  <mat-form-field class="mat-form-lesson delete"  >
                     <mat-label>Youtube Url</mat-label>
-                    <span matTextPrefix>https://youtu.be/</span>
-                    <input matInput placeholder="URL"/>
+                    <div class="div-button">
+                      <span matTextPrefix>https://youtu.be/</span>
+                      <input matInput placeholder="URL" formControlName="youtubeUrl" />
+                      <button mat-mini-fab color="warn" aria-label="Delete Lessons" (click)="deleteLesson()"><mat-icon >delete</mat-icon> </button>
+                    </div>
                   </mat-form-field>
                 </td>
+                <!-- <td>
+                  <mat-form-field class="mat-form-lesson-min"  >
+                    <input matInput hidden/>
+                    <button mat-mini-fab color="warn" aria-label="Delete Lessons" (click)="deleteLesson()"><mat-icon class="delete-icon">delete</mat-icon> </button>
+                  </mat-form-field>
+                </td> -->
               </tr>
             </table>
           </div>

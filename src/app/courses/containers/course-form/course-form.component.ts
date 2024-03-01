@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ICoursesForms, ICourses, } from 'src/app/_share/_models/iCourses-model';
@@ -36,9 +36,11 @@ export class CourseFormComponent implements OnInit {
       //   category: localCourse.category,
       // });
 
-    console.log("FORMGROUP", this.form);
-    console.log("FORMVALUE", this.form.value);
+    // console.log("FORMGROUP", this.form);
+    // console.log("FORMVALUE", this.form.value);
     this.form.get('_id')?.value ? this.localButton = "Update" : this.localButton = "Save"
+
+
   }
 
   /**Create a FormaArray Methos */
@@ -61,6 +63,23 @@ export class CourseFormComponent implements OnInit {
       youtubeUrl: [lesson.youtubeUrl]
     });
   }
+
+  /**Get a controls tem que Tipar com Untyped para achar os CONTROLS q são protegidos, tem q usar o <>*/
+  getLessonsFormArray() {
+    return (<UntypedFormArray>this.form.get('lessons')).controls ;
+  }
+
+  /**Add lesson no Form do html */
+  addNewLesson() {
+    const localLesson = this.form.get('lessons') as UntypedFormArray;
+    localLesson.push(this.createLesson());
+  }
+
+  /**Remove lesson no Form do html */
+  deleteLesson() {
+    
+  }
+
 
   onSubmit() {
     this.courseService.save(this.form.value as ICourses).subscribe({
