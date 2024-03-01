@@ -44,8 +44,9 @@ mat-card-content {
     .mat-form-lesson.delete {
       display:flex;
       width: 27.1vw;
+      text-overflow: clip;
       .div-button{
-        
+
         align-items: center;
         display: flex;
         justify-content: flex-end;

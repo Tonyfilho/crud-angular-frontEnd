@@ -31,10 +31,10 @@ export class CourseFormComponent implements OnInit {
     });
     /**O Valor será SETADO direto na criação do Form */
     // this.form.setValue({
-      //   _id: localCourse._id as any,
-      //   name: localCourse.name,
-      //   category: localCourse.category,
-      // });
+    //   _id: localCourse._id as any,
+    //   name: localCourse.name,
+    //   category: localCourse.category,
+    // });
 
     // console.log("FORMGROUP", this.form);
     // console.log("FORMVALUE", this.form.value);
@@ -63,10 +63,18 @@ export class CourseFormComponent implements OnInit {
       youtubeUrl: [lesson.youtubeUrl]
     });
   }
+  /**Delete one lesson to form */
+  private deleteLesson(lesson: ILesson = { id: '', name: '', youtubeUrl: '' }): ILessoForms {
+    return this.fb.group({
+      id: new FormControl(lesson.id),
+      name: [lesson.name],
+      youtubeUrl: [lesson.youtubeUrl]
+    });
+  }
 
   /**Get a controls tem que Tipar com Untyped para achar os CONTROLS q são protegidos, tem q usar o <>*/
   getLessonsFormArray() {
-    return (<UntypedFormArray>this.form.get('lessons')).controls ;
+    return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
 
   /**Add lesson no Form do html */
@@ -76,8 +84,17 @@ export class CourseFormComponent implements OnInit {
   }
 
   /**Remove lesson no Form do html */
-  deleteLesson() {
-    
+  deleteNewLesson(index: number) {
+    const localLesson = (<UntypedFormArray>this.form.get('lessons'));
+    localLesson.removeAt(index);
+
+    // const localLesson = (<UntypedFormArray>this.form.get('lessons')).controls
+    // if (localLesson.findIndex(() => index) > -1 && localLesson[index] != undefined) {
+    //   console.log("dentro do if");
+    //   this.courseService.save(this.form.value);
+    // }
+    // return localLesson.splice(index, 1);
+
   }
 
 
