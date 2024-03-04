@@ -27,7 +27,7 @@ export class CourseFormComponent implements OnInit {
       _id: [localCourse._id],
       name: new FormControl(localCourse.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
       category: new FormControl(localCourse.category, [Validators.required]),
-      lessons: this.fb.array(this.retrieveLessons(localCourse)),
+      lessons: this.fb.array(this.retrieveLessons(localCourse), Validators.required,),
     });
     /**O Valor será SETADO direto na criação do Form */
     // this.form.setValue({
@@ -46,7 +46,7 @@ export class CourseFormComponent implements OnInit {
   /**Create a FormaArray Methos */
   private retrieveLessons(course: ICourses): ILessoForms[] {
     const localLessons: ILessoForms[] = [];
-    if (course?.lessons.length > 0) {
+    if (course?.lessons.length >= 0) {
       course.lessons.forEach(lesson => localLessons.push(this.createLesson(lesson)));
     } else {
       localLessons.push(this.createLesson());
@@ -59,18 +59,11 @@ export class CourseFormComponent implements OnInit {
   private createLesson(lesson: ILesson = { id: '', name: '', youtubeUrl: '' }): ILessoForms {
     return this.fb.group({
       id: new FormControl(lesson.id),
-      name: [lesson.name],
-      youtubeUrl: [lesson.youtubeUrl]
+      name: [lesson.name, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      youtubeUrl: [lesson.youtubeUrl, [Validators.required, Validators.minLength(11), Validators.maxLength(30)]]
     });
   }
-  /**Delete one lesson to form */
-  private deleteLesson(lesson: ILesson = { id: '', name: '', youtubeUrl: '' }): ILessoForms {
-    return this.fb.group({
-      id: new FormControl(lesson.id),
-      name: [lesson.name],
-      youtubeUrl: [lesson.youtubeUrl]
-    });
-  }
+
 
   /**Get a controls tem que Tipar com Untyped para achar os CONTROLS q são protegidos, tem q usar o <>*/
   getLessonsFormArray() {
@@ -99,18 +92,24 @@ export class CourseFormComponent implements OnInit {
 
 
   onSubmit() {
-    this.courseService.save(this.form.value as ICourses).subscribe({
-      next: res => {
-        this.openSnackBar("All right! New Course save.")
-        this.onCancel();
-        console.log(res);
-      },
-      error: err => {
-        this.openSnackBar('Sorry you can not save your course!');
-        this.form.reset();
-      }
 
-    });
+    if (this.form.valid) {
+      this.courseService.save(this.form.value as ICourses).subscribe({
+        next: res => {
+          this.openSnackBar("All right! New Course save.")
+          this.onCancel();
+          console.log(res);
+        },
+        error: err => {
+          this.openSnackBar('Sorry you can not save your course!');
+          this.form.reset();
+        }
+
+      });
+
+    } else {
+          this.openSnackBar('Fulfill the forms pls!')
+    }
   }
 
   onCancel() {
@@ -143,6 +142,12 @@ export class CourseFormComponent implements OnInit {
     return 'Not a valid field';
 
   };
+
+  isFormArrayRequired(){
+    const localLesson = this.form.get('lessons') as UntypedFormArray;
+   // return !localLesson.valid && localLesson.hasError(('required')) // para testes;
+    return !localLesson.valid && localLesson.hasError(('required'))&& localLesson.touched;
+  }
 
 
 

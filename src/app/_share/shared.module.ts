@@ -5,6 +5,7 @@ import { ErrorDialogComponent } from './components-material/error-dialog/error-d
 import { AppMaterialModule } from './app-material/app-material.module';
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConfirmationDialogComponent } from './components-material/confirmation-dialog/confirmation-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -17,6 +18,7 @@ import { ConfirmationDialogComponent } from './components-material/confirmation-
   imports: [
     CommonModule,
     AppMaterialModule,
+    HttpClientModule
 
   ],
   exports: [ErrorDialogComponent, CategoryPipe, ConfirmationDialogComponent]
