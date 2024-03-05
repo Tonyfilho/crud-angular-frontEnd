@@ -10,9 +10,40 @@ export class FormsErrorsMessageService {
 
 
 
-  constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location) {
-
+  /**Este é um metodo rercusivo, onde ele percorrer to o formulario intependente da quantidade de forms */
+  /**
+   * original loiane
+   *   validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof UntypedFormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (
+        control instanceof UntypedFormGroup ||
+        control instanceof UntypedFormArray
+      ) {
+        control.markAsTouched({ onlySelf: true });
+        this.validateAllFormFields(control);
+      }
+    });
   }
+   */
+
+  validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray) {
+    Object.keys(formGroup.controls).forEach(field => {
+      //  console.log(field);
+      const control = formGroup.get(field);
+      if (control instanceof UntypedFormControl) {
+        control?.markAsTouched({ onlySelf: true }); /**este prop. diz para validar cada form invidual, caso contrario ficar todos */
+      } else if (control instanceof UntypedFormGroup || control instanceof UntypedFormArray) {
+        control?.markAsTouched({ onlySelf: true });
+        control?.markAsDirty({ onlySelf: true });
+        this.validateAllFormFields(control); /**recurcividade chamando o metodo novamente */
+      }
+    });
+  }
+
+
 
 
 
@@ -25,17 +56,17 @@ export class FormsErrorsMessageService {
     return this.getErrorMessageFronField(<UntypedFormControl>localField);
   };
 
-  getErrorMessageFronField(fieldName: UntypedFormControl) {
+  getErrorMessageFronField(fieldName: UntypedFormControl, minLenght: number = 5, maxlength: number = 100) {
 
     if (fieldName?.hasError('required')) {
       return 'You must enter a value';
     }
     if (fieldName?.hasError('minlength')) {
-      const requiredLength = fieldName.errors ? fieldName.errors['minlength']['requiredLength'] : 5; // se tiver retorno a qyantidade, senão retorno o valor padrão
+      const requiredLength = fieldName.errors ? fieldName.errors['minlength']['requiredLength'] : minLenght; // se tiver retorno a qyantidade, senão retorno o valor padrão
       return `Min lenght: ${requiredLength}`;
     }
     if (fieldName?.hasError('maxlength')) {
-      const requiredLength = fieldName.errors ? fieldName.errors['maxlength']['requiredLength'] : 100;
+      const requiredLength = fieldName.errors ? fieldName.errors['maxlength']['requiredLength'] : maxlength;
       return `Max lenght: ${requiredLength}`;
     }
     // formGroup.getError('name')
@@ -52,24 +83,12 @@ export class FormsErrorsMessageService {
      */
   }
 
-  isFormArrayRequired(formGroup : UntypedFormArray){
-    const localLesson = formGroup.get('lessons') as UntypedFormArray;
-   // return !localLesson.valid && localLesson.hasError(('required')) // para testes;
-    return !localLesson.valid && localLesson.hasError(('required'))&& localLesson.touched;
+  isFormArrayRequired(formGroup: UntypedFormGroup, formArrayName: string) {
+    const localFormArray = formGroup.get(formArrayName) as UntypedFormArray;
+    // return !localFormArray.valid && localFormArray.hasError(('required')) // para testes;
+    return !localFormArray.valid && localFormArray.hasError(('required')) && localFormArray.touched;
   }
 
-
-  verificaValidacoesForm(formGroup: UntypedFormGroup | UntypedFormArray) {
-    Object.keys(formGroup.controls).forEach(campo => {
-      console.log(campo);
-      const controle = formGroup.get(campo);
-      controle?.markAsDirty();
-      controle?.markAsTouched();
-      if (controle instanceof UntypedFormGroup || controle instanceof UntypedFormArray) {
-        this.verificaValidacoesForm(controle);
-      }
-    });
-  }
 
 
 }
