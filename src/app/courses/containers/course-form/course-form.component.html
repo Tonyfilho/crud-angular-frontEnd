@@ -23,12 +23,12 @@
 
           <!-- Lessons -->
           <div class="lesson-father">
-            <mat-toolbar color="primary" class="lesson">Lessons Details
+            <mat-toolbar color="primary" class="lesson-details">Lessons Details
               <button mat-fab color="warn" aria-label="Add Lessons" (click)="addNewLesson()"><mat-icon class="mat-18">add</mat-icon> </button>
             </mat-toolbar>
-          </div>
-          <div class="lesson-father-errors">
-            <mat-error *ngIf="this.formsUtilsService.isFormArrayRequired(form, 'lessons')"> Add one Lesson pls</mat-error>
+            <div class="lesson-father-errors">
+              <mat-error *ngIf="this.formsUtilsService.isFormArrayRequired(form, 'lessons')"> Add one Lesson pls</mat-error>
+            </div>
           </div>
 
           <div class="div-lesson-father-child">
@@ -64,7 +64,8 @@
     </mat-card-content>
     <mat-card-actions   >
       <!-- <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ this.form.get('name')?.invalid || this.form.get('category')?.invalid }}" >{{ this.localButton }}</button> -->
-      <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ this.form.valid }}" >{{ this.localButton }}</button>
+      <!-- <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ !this.form.valid }}" >{{ this.localButton }}</button> -->
+      <button mat-raised-button color="primary" (click)="onSubmit()" >{{ this.localButton }}</button>
       <button mat-raised-button (click)="onCancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>

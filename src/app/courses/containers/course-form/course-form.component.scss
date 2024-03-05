@@ -11,25 +11,38 @@ mat-card-content {
   height: max-content;
 }
 
-.mat-form-father {
-  width: 50vw;
-  margin: 1%;
-}
-
-.lesson-father {
+.min-width {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: stretch;
+  flex-wrap: wrap;
 
-}
-.lesson-father-errors {
-  text-align: left;
-  color: red;
-}
-.lesson {
-  display: flex;
-  width: 50vw;
-  margin: 1%;
-  justify-content: space-between;
+  .mat-form-father {
+    width: 50vw;
+    margin: 1%;
+  }
+
+  .lesson-father {
+    display: flex;
+    flex-direction: column;
+
+    .lesson-details {
+      display: flex;
+      width: 50vw;
+      justify-content: space-between;
+    }
+
+    .lesson-father-errors {
+      text-align: left;
+      color: red;
+      display: flex;
+      justify-content: first baseline;
+    }
+
+  }
+
+
+
 }
 
 .div-lesson-father-child {
@@ -59,12 +72,6 @@ mat-card-content {
     }
 
 
-    // .mat-form-lesson-min {
-    //   width: 4vw;
-    //   min-width: 3vw;
-    //   height: 10vh;
-    // }
-
   }
 }
 
@@ -78,9 +85,4 @@ mat-card-content {
 }
 
 
-.min-width {
-width: 100%;
-min-width: 150px;
-min-height: 300px;
-}
 

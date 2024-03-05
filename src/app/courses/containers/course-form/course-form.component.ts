@@ -27,7 +27,7 @@ export class CourseFormComponent implements OnInit {
   }
   ngOnInit(): void {
     const localCourse: ICourses = this.route.snapshot.data['course'];
-    console.log("localCourse in OnInit: ", localCourse);
+   // console.log("localCourse in OnInit: ", localCourse);
     this.form = this.fb.group({
       _id: [localCourse._id],
       name: new FormControl(localCourse.name, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
@@ -108,12 +108,13 @@ export class CourseFormComponent implements OnInit {
         error: err => {
           this.openSnackBar('Sorry you can not save your course!');
           this.form.reset();
-        }
-
+        },
+        complete: () =>  this.form.reset()
       });
 
     } else {
-          this.openSnackBar('Fulfill the forms pls!')
+          this.formsUtilsService.validateAllFormFields(this.form);
+          this.openSnackBar('Fulfill the forms pls!');
     }
   }
 
@@ -129,24 +130,6 @@ export class CourseFormComponent implements OnInit {
   }
 
 
-  // getErrorMessage(fieldName: string) {
-  //   const field = this.form.get(fieldName);
-  //   if (field?.hasError('required')) {
-  //     return 'You must enter a value';
-  //   }
-  //   if (field?.hasError('minlength')) {
-  //     const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5; // se tiver retorno a qyantidade, senão retorno o valor padrão
-  //     return `Min lenght: ${requiredLength}`;
-  //   }
-  //   if (field?.hasError('maxlength')) {
-  //     const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
-  //     return `Max lenght: ${requiredLength}`;
-  //   }
-
-  //   // this.form.getError('name')
-  //   return 'Not a valid field';
-
-  // };
 
 
 
