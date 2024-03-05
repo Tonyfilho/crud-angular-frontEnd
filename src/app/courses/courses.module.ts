@@ -8,7 +8,7 @@ import { SharedModule } from '../_share/shared.module';
 import { CourseFormComponent } from './containers/course-form/course-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
-import { courseResolver } from './_guards/course.resolver';
+import { courseResolver } from '../_guards/course.resolver';
 
 
 
