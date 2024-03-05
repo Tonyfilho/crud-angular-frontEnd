@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { ICoursesForms, ICourses, } from 'src/app/_share/_models/iCourses-model';
-import { CoursesService } from '../../services/courses.service';
-import { Observable } from 'rxjs';
+import { ICourses } from 'src/app/_share/_models/iCourses-model';
 import { ILessoForms, ILesson } from 'src/app/_share/_models/iLesson-model';
+import { CoursesService } from '../../services/courses.service';
+import { FormsUtilsService } from 'src/app/_share/forms-validations/forms-utils.service';
 
 @Component({
   selector: 'app-course-form',
@@ -17,15 +17,20 @@ export class CourseFormComponent implements OnInit {
   //form!: ICoursesForms;  /**Foi removido a tipagem pois FormsArray não aceita tipagem, isto esta nas DOCs do Angular */
   form!: FormGroup;
   localButton: string = "Save"
-  constructor(private fb: FormBuilder, private courseService: CoursesService, private _snackBar: MatSnackBar, private location: Location, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder,
+    private courseService: CoursesService,
+    private _snackBar: MatSnackBar,
+    private location: Location,
+    private route: ActivatedRoute,
+    public formsUtilsService: FormsUtilsService) {
 
   }
   ngOnInit(): void {
     const localCourse: ICourses = this.route.snapshot.data['course'];
-    console.log("localCourse: ", localCourse);
+    console.log("localCourse in OnInit: ", localCourse);
     this.form = this.fb.group({
       _id: [localCourse._id],
-      name: new FormControl(localCourse.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
+      name: new FormControl(localCourse.name, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
       category: new FormControl(localCourse.category, [Validators.required]),
       lessons: this.fb.array(this.retrieveLessons(localCourse), Validators.required,),
     });
@@ -124,30 +129,24 @@ export class CourseFormComponent implements OnInit {
   }
 
 
-  getErrorMessage(fieldName: string) {
-    const field = this.form.get(fieldName);
-    if (field?.hasError('required')) {
-      return 'You must enter a value';
-    }
-    if (field?.hasError('minlength')) {
-      const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5; // se tiver retorno a qyantidade, senão retorno o valor padrão
-      return `Min lenght: ${requiredLength}`;
-    }
-    if (field?.hasError('maxlength')) {
-      const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
-      return `Max lenght: ${requiredLength}`;
-    }
+  // getErrorMessage(fieldName: string) {
+  //   const field = this.form.get(fieldName);
+  //   if (field?.hasError('required')) {
+  //     return 'You must enter a value';
+  //   }
+  //   if (field?.hasError('minlength')) {
+  //     const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5; // se tiver retorno a qyantidade, senão retorno o valor padrão
+  //     return `Min lenght: ${requiredLength}`;
+  //   }
+  //   if (field?.hasError('maxlength')) {
+  //     const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
+  //     return `Max lenght: ${requiredLength}`;
+  //   }
 
-    // this.form.getError('name')
-    return 'Not a valid field';
+  //   // this.form.getError('name')
+  //   return 'Not a valid field';
 
-  };
-
-  isFormArrayRequired(){
-    const localLesson = this.form.get('lessons') as UntypedFormArray;
-   // return !localLesson.valid && localLesson.hasError(('required')) // para testes;
-    return !localLesson.valid && localLesson.hasError(('required'))&& localLesson.touched;
-  }
+  // };
 
 
 

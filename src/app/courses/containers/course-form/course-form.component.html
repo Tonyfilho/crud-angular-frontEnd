@@ -8,7 +8,7 @@
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" formControlName="name" #name/>
             <mat-hint align="end">{{ name?.value?.length || 0 }} /100</mat-hint>
-            <mat-error *ngIf="this.form.get('name')?.invalid">{{getErrorMessage('name')}}</mat-error>
+            <mat-error *ngIf="this.form.get('name')?.invalid">{{this.formsUtilsService.getErrorMessage(form,'name', 2, 30)}}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill"  class="mat-form-father">
@@ -18,7 +18,7 @@
               <mat-option value="front-end">Front-End</mat-option>
               <mat-option value="back-end">Back-End</mat-option>
             </mat-select>
-            <mat-error *ngIf="this.form.get('category')?.invalid">{{getErrorMessage('category')}}</mat-error>
+            <mat-error *ngIf="this.form.get('category')?.invalid">{{this.formsUtilsService.getErrorMessage(form, 'category')}}</mat-error>
           </mat-form-field>
 
           <!-- Lessons -->
@@ -28,7 +28,7 @@
             </mat-toolbar>
           </div>
           <div class="lesson-father-errors">
-            <mat-error *ngIf="this.isFormArrayRequired()"> Filfull Lesson Forms</mat-error>
+            <mat-error *ngIf="this.formsUtilsService.isFormArrayRequired(form, 'lessons')"> Add one Lesson pls</mat-error>
           </div>
 
           <div class="div-lesson-father-child">
@@ -40,7 +40,7 @@
                   <mat-form-field class="mat-form-lesson" >
                     <mat-label>Name Lesson</mat-label>
                     <input matInput placeholder="Name Lesson"  formControlName="name"/>
-                    <mat-error *ngIf="this.getLessonsFormArray()[i].get('name')?.invalid">{{getErrorMessage('category')}} </mat-error>
+                    <mat-error *ngIf="this.getLessonsFormArray()[i].get('name')?.invalid">{{ this.formsUtilsService.getErrorMessageFromFormArrayField(form, 'lessons', 'name', i)}} </mat-error>
 
                   </mat-form-field>
                 </td>
@@ -52,7 +52,7 @@
                       <input matInput placeholder="URL" formControlName="youtubeUrl" />
                       <button mat-mini-fab color="warn" aria-label="Delete Lessons" (click)="deleteNewLesson(i)"><mat-icon >delete</mat-icon> </button>
                     </div>
-                    <mat-error *ngIf="this.getLessonsFormArray()[i].get('youtubeUrl')?.invalid">{{getErrorMessage('category')}} </mat-error>
+                    <mat-error *ngIf="this.getLessonsFormArray()[i].get('youtubeUrl')?.invalid">{{ this.formsUtilsService.getErrorMessageFromFormArrayField(form, 'lessons', 'youtubeUrl', i) }} </mat-error>
                   </mat-form-field>
                 </td>
 

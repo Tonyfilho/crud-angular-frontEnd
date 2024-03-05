@@ -45,16 +45,16 @@ export class FormsUtilsService {
 
 
 
-  getErrorMessageForm(formGroup: UntypedFormGroup, fieldName: string) {
+  getErrorMessage(formGroup: UntypedFormGroup, fieldName: string, minLenght?: number, maxlength?: number) {
     /** ------ou---o CAST em DIAMANTE
      * const localField = formGroup.get(fieldName) as UntypedFormControl;
      * return this.getErrorMessageFronField(localField) ;
      */
     const localField = formGroup.get(fieldName)
-    return this.getErrorMessageFronField(<UntypedFormControl>localField);
+    return this.getErrorMessageFromField(<UntypedFormControl>localField, minLenght, maxlength);
   };
 
-  getErrorMessageFronField(fieldName: UntypedFormControl, minLenght: number = 5, maxlength: number = 100) {
+  getErrorMessageFromField(fieldName: UntypedFormControl, minLenght: number = 5, maxlength: number = 100) {
 
     if (fieldName?.hasError('required')) {
       return 'You must enter a value';
@@ -71,10 +71,10 @@ export class FormsUtilsService {
     return 'Not a valid field';
   };
 
-  getFormArrayField(formGroup: UntypedFormGroup, formArrayName: string, fieldName: string, index: number) {
+  getErrorMessageFromFormArrayField(formGroup: UntypedFormGroup, formArrayName: string, fieldName: string, index: number) {
     const localFormArray = formGroup.get(formArrayName) as UntypedFormArray;
     const localfield = localFormArray.controls[index].get(fieldName) as UntypedFormControl;
-    return this.getErrorMessageFronField(localfield);
+    return this.getErrorMessageFromField(localfield);
     /** ou-- usar o Diamante depois
      * const localfield = localFormArray.controls[index].get(fieldName)
      * return this.getErrorMessageFronField(<UntypedFormControl>localfield);
@@ -84,7 +84,9 @@ export class FormsUtilsService {
   isFormArrayRequired(formGroup: UntypedFormGroup, formArrayName: string) {
     const localFormArray = formGroup.get(formArrayName) as UntypedFormArray;
     // return !localFormArray.valid && localFormArray.hasError(('required')) // para testes;
-    return !localFormArray.valid && localFormArray.hasError(('required')) && localFormArray.touched;
+     console.log("no service invalid e required: ", !localFormArray.valid && localFormArray.touched);
+     console.log("no service touched: ", localFormArray.touched);
+    return !localFormArray.valid || localFormArray.touched && localFormArray.hasError('required')
   }
 
 
