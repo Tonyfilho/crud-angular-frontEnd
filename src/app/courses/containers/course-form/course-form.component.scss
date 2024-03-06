@@ -38,11 +38,7 @@ mat-card-content {
       display: flex;
       justify-content: first baseline;
     }
-
   }
-
-
-
 }
 
 .div-lesson-father-child {
@@ -56,33 +52,35 @@ mat-card-content {
     .mat-form-lesson {
       width: 22.9vw;
       height: 10vh;
-
     }
     .mat-form-lesson.delete {
-      display:flex;
+      display: flex;
       width: 27.1vw;
       text-overflow: clip;
-      .div-button{
-
-        align-items: center;
+      .div-button {
         display: flex;
+        align-items: center;
         justify-content: flex-end;
-
+        .div-button-button {
+          display: flex;
+          justify-content: center;
+          width: 2.5em;
+          height: 2.5em;
+          margin-right: 1em;
+          .icon-delete-lesson {
+            display: flex;
+            width: fit-content;
+          }
+        }
       }
     }
-
-
   }
 }
 
-
-.mdc-card__actions  {
+.mdc-card__actions {
   justify-content: flex-end !important;
 }
 
 .mat-mdc-raised-button {
   margin: 0.3% !important;
 }
-
-
-
