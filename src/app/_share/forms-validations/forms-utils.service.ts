@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormsUtilsService {
 
+  constructor(private _snackBar: MatSnackBar,) {
 
+  }
 
   /**Este é um metodo rercusivo, onde ele percorrer to o formulario intependente da quantidade de forms */
   /**
@@ -54,6 +57,7 @@ export class FormsUtilsService {
     return this.getErrorMessageFromField(<UntypedFormControl>localField, minLenght, maxlength);
   };
 
+
   getErrorMessageFromField(fieldName: UntypedFormControl, minLenght: number = 5, maxlength: number = 100) {
 
     if (fieldName?.hasError('required')) {
@@ -67,7 +71,7 @@ export class FormsUtilsService {
       const requiredLength = fieldName.errors ? fieldName.errors['maxlength']['requiredLength'] : maxlength;
       return `Max lenght: ${requiredLength}`;
     }
-    // formGroup.getError('name')
+
     return 'Not a valid field';
   };
 
@@ -81,13 +85,16 @@ export class FormsUtilsService {
      */
   }
 
-  isFormArrayRequired(formGroup: UntypedFormGroup, formArrayName: string) {
-    const localFormArray = formGroup.get(formArrayName) as UntypedFormArray;
-    // return !localFormArray.valid && localFormArray.hasError(('required')) // para testes;
-     console.log("no service invalid e required: ", !localFormArray.valid && localFormArray.touched);
-     console.log("no service touched: ", localFormArray.touched);
-    return !localFormArray.valid || localFormArray.touched && localFormArray.hasError('required')
+  isFormArrayRequired(formGroup: UntypedFormGroup, fieldName: string) {
+    const field = formGroup.get(fieldName) as UntypedFormControl;
+   // return  field.touched && !field.valid && field.hasError('required');
+    return  !field.valid && !field.hasError('required');
   }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', { duration: 5000 });
+  }
+
 
 
 

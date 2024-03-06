@@ -7,14 +7,14 @@
           <mat-form-field  class="mat-form-father" >
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" formControlName="name" #name/>
-            <mat-hint align="end">{{ name?.value?.length || 0 }} /100</mat-hint>
-            <mat-error *ngIf="this.form.get('name')?.invalid">{{this.formsUtilsService.getErrorMessage(form,'name', 2, 30)}}</mat-error>
+            <mat-hint align="end">{{ name?.value?.length || 0 }} /50</mat-hint>
+            <mat-error *ngIf="this.form.get('name')?.invalid">{{this.formsUtilsService.getErrorMessage(form,'name', 2, 50)}}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill"  class="mat-form-father">
             <mat-label>Choose one Category</mat-label>
             <mat-select  formControlName="category">
-              <mat-option value="null"></mat-option>
+              <!-- <mat-option value="null"></mat-option>  foi removido para a validação funcionar -->
               <mat-option value="front-end">Front-End</mat-option>
               <mat-option value="back-end">Back-End</mat-option>
             </mat-select>
@@ -26,6 +26,7 @@
             <mat-toolbar color="primary" class="lesson-details">Lessons Details
               <button mat-fab color="warn" aria-label="Add Lessons" (click)="addNewLesson()"><mat-icon class="mat-18">add</mat-icon> </button>
             </mat-toolbar>
+            <!-- validação do controls -->
             <div class="lesson-father-errors">
               <mat-error *ngIf="this.formsUtilsService.isFormArrayRequired(form, 'lessons')"> Add one Lesson pls</mat-error>
             </div>

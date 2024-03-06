@@ -1,12 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ICourses } from 'src/app/_share/_models/iCourses-model';
 import { ILessoForms, ILesson } from 'src/app/_share/_models/iLesson-model';
-import { CoursesService } from '../../services/courses.service';
 import { FormsUtilsService } from 'src/app/_share/forms-validations/forms-utils.service';
+import { CoursesService } from '../../services/courses.service';
 
 @Component({
   selector: 'app-course-form',
@@ -19,7 +18,6 @@ export class CourseFormComponent implements OnInit {
   localButton: string = "Save"
   constructor(private fb: FormBuilder,
     private courseService: CoursesService,
-    private _snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
     public formsUtilsService: FormsUtilsService) {
@@ -27,24 +25,23 @@ export class CourseFormComponent implements OnInit {
   }
   ngOnInit(): void {
     const localCourse: ICourses = this.route.snapshot.data['course'];
-   // console.log("localCourse in OnInit: ", localCourse);
+    // console.log("localCourse in OnInit: ", localCourse);
     this.form = this.fb.group({
       _id: [localCourse._id],
       name: new FormControl(localCourse.name, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
       category: new FormControl(localCourse.category, [Validators.required]),
       lessons: this.fb.array(this.retrieveLessons(localCourse), Validators.required,),
     });
+    this.form.get('_id')?.value ? this.localButton = "Update" : this.localButton = "Save"
+
     /**O Valor será SETADO direto na criação do Form */
     // this.form.setValue({
     //   _id: localCourse._id as any,
     //   name: localCourse.name,
     //   category: localCourse.category,
     // });
-
     // console.log("FORMGROUP", this.form);
     // console.log("FORMVALUE", this.form.value);
-    this.form.get('_id')?.value ? this.localButton = "Update" : this.localButton = "Save"
-
 
   }
 
@@ -56,7 +53,6 @@ export class CourseFormComponent implements OnInit {
     } else {
       localLessons.push(this.createLesson());
     }
-
     return localLessons;
   }
 
@@ -65,7 +61,7 @@ export class CourseFormComponent implements OnInit {
     return this.fb.group({
       id: new FormControl(lesson.id),
       name: [lesson.name, [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
-      youtubeUrl: [lesson.youtubeUrl, [Validators.required, Validators.minLength(11), Validators.maxLength(30)]]
+      youtubeUrl: [lesson.youtubeUrl, [Validators.required, Validators.minLength(11), Validators.maxLength(50)]]
     });
   }
 
@@ -84,13 +80,17 @@ export class CourseFormComponent implements OnInit {
   /**Remove lesson no Form do html */
   deleteNewLesson(index: number) {
     const localLesson = (<UntypedFormArray>this.form.get('lessons'));
-    localLesson.removeAt(index);
+    if (localLesson.get('id')) {
+      console.log("dentro do if");
+      localLesson.removeAt(index);
+      this.courseService.save(this.form.value).subscribe();
+      this.location.back();
+    }  else {
+      localLesson.removeAt(index);
 
+    }
+      /**Modo JavaScript */
     // const localLesson = (<UntypedFormArray>this.form.get('lessons')).controls
-    // if (localLesson.findIndex(() => index) > -1 && localLesson[index] != undefined) {
-    //   console.log("dentro do if");
-    //   this.courseService.save(this.form.value);
-    // }
     // return localLesson.splice(index, 1);
 
   }
@@ -101,20 +101,20 @@ export class CourseFormComponent implements OnInit {
     if (this.form.valid) {
       this.courseService.save(this.form.value as ICourses).subscribe({
         next: res => {
-          this.openSnackBar("All right! New Course save.")
+          this.formsUtilsService.openSnackBar("All right! New Course save.")
           this.onCancel();
           console.log(res);
         },
         error: err => {
-          this.openSnackBar('Sorry you can not save your course!');
+          this.formsUtilsService.openSnackBar('Sorry you can not save your course!');
           this.form.reset();
         },
-        complete: () =>  this.form.reset()
+        complete: () => this.form.reset()
       });
 
     } else {
-          this.formsUtilsService.validateAllFormFields(this.form);
-          this.openSnackBar('Fulfill the forms pls!');
+      this.formsUtilsService.validateAllFormFields(this.form);
+      this.formsUtilsService.openSnackBar('Fulfill the forms pls!');
     }
   }
 
@@ -125,9 +125,6 @@ export class CourseFormComponent implements OnInit {
 
   }
 
-  private openSnackBar(message: string) {
-    this._snackBar.open(message, '', { duration: 5000 });
-  }
 
 
 
