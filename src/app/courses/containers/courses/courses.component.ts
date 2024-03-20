@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, first, throwError } from 'rxjs';
-import { ICourses } from '../../models/iCourses-model';
+import { ICourse } from '../../models/iCourse-model';
 import { CoursesService } from '../../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import { ConfirmationDialogComponent } from 'src/app/_share/components-material/
 export class CoursesComponent {
 
 
-  coursesList$!: Observable<ICourses[]>;
+  coursesList$!: Observable<ICourse[]>;
 
   constructor(private courseService: CoursesService,
     private router: Router,
@@ -31,11 +31,11 @@ export class CoursesComponent {
     this.router.navigate(['new'], { relativeTo: this.route });
   };
 
-  onEdit(course: ICourses) {
+  onEdit(course: ICourse) {
     this.router.navigate(['edit', course._id], { relativeTo: this.route });
   };
 
-  onDelete(course: ICourses) {
+  onDelete(course: ICourse) {
 
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: { name: "Are you Sure", color: "accent" },

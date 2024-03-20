@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ICourses } from 'src/app/courses/models/iCourses-model';
+import { ICourse } from 'src/app/courses/models/iCourse-model';
 import { ILessoForms, ILesson } from 'src/app/courses/models/iLesson-model';
 import { FormsUtilsService } from 'src/app/_share/forms-validations/forms-utils.service';
 import { CoursesService } from '../../services/courses.service';
@@ -24,7 +24,7 @@ export class CourseFormComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    const localCourse: ICourses = this.route.snapshot.data['course'];
+    const localCourse: ICourse = this.route.snapshot.data['course'];
     // console.log("localCourse in OnInit: ", localCourse);
     this.form = this.fb.group({
       _id: [localCourse._id],
@@ -46,7 +46,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   /**Create a FormaArray Methos */
-  private retrieveLessons(course: ICourses): ILessoForms[] {
+  private retrieveLessons(course: ICourse): ILessoForms[] {
     const localLessons: ILessoForms[] = [];
     if (course?.lessons.length >= 0) {
       course.lessons.forEach(lesson => localLessons.push(this.createLesson(lesson)));
@@ -99,7 +99,7 @@ export class CourseFormComponent implements OnInit {
   onSubmit() {
 
     if (this.form.valid) {
-      this.courseService.save(this.form.value as ICourses).subscribe({
+      this.courseService.save(this.form.value as ICourse).subscribe({
         next: res => {
           this.formsUtilsService.openSnackBar("All right! New Course save.")
           this.onCancel();

@@ -1,7 +1,7 @@
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ILessoForms, ILesson } from "./iLesson-model";
 
-export interface ICourses {
+export interface ICourse {
   _id: string | number;
   name: string;
   category: string;
