@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CoursesService } from '../courses/services/courses.service';
-import { ICourses } from '../_share/_models/iCourses-model';
+import { ICourses } from '../courses/containers/models/iCourses-model';
 
 
 export const courseResolver: ResolveFn<Observable<ICourses>> = (route, state) => {

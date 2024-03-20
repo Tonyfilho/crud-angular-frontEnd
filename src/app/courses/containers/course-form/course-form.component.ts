@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ICourses } from 'src/app/_share/_models/iCourses-model';
-import { ILessoForms, ILesson } from 'src/app/_share/_models/iLesson-model';
+import { ICourses } from 'src/app/courses/containers/models/iCourses-model';
+import { ILessoForms, ILesson } from 'src/app/courses/containers/models/iLesson-model';
 import { FormsUtilsService } from 'src/app/_share/forms-validations/forms-utils.service';
 import { CoursesService } from '../../services/courses.service';
 

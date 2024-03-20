@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, first, of, throwError } from 'rxjs';
 
 
-import { ICourses } from './../../_share/_models/iCourses-model';
+import { ICourses } from '../containers/models/iCourses-model';
 import { ErrorDialogComponent } from 'src/app/_share/components-material/error-dialog/error-dialog.component';
-import { IErrorsHttpModel } from 'src/app/_share/_models/iErrorsHttp-model';
+import { IErrorsHttpModel } from 'src/app/courses/containers/models/iErrorsHttp-model';
 import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
 
 @Injectable({

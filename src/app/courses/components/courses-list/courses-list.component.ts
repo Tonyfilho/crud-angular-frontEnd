@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ICourses } from 'src/app/_share/_models/iCourses-model';
+import { ICourses } from 'src/app/courses/containers/models/iCourses-model';
 
 @Component({
   selector: 'app-courses-list',

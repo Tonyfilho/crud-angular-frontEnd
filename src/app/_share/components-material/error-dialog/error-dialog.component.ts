@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { IErrorsHttpModel } from '../../_models/iErrorsHttp-model';
+import { IErrorsHttpModel } from '../../../courses/containers/models/iErrorsHttp-model';
 
 @Component({
   selector: 'app-error-dialog',
