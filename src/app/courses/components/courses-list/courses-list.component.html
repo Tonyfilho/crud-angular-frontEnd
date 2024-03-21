@@ -29,7 +29,7 @@
   <!-- action Column -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="action-column">
-      <mat-card-header  >
+      <mat-card-header>
         <button
           mat-mini-fab
           color="accent"
@@ -44,11 +44,21 @@
 
     <!-- tem que passar a lista -->
     <mat-cell *matCellDef="let item" class="action-column">
-      <button mat-icon-button color="primary" aria-label="Update Course" (click)="onEdit(item)">
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Update Course"
+        (click)="onEdit(item)"
+      >
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-icon-button color="warn" aria-label="Delete Course" (click)="onDelete(item)">
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Delete Course"
+        (click)="onDelete(item)"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>
@@ -57,4 +67,6 @@
   <!-- linha mat-row diz: para cada registro q temos no array Cria-se uma coluna q foi declarado  -->
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
 </mat-table>
+

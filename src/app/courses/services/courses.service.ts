@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, first, of, throwError } from 'rxjs';
+import { ICoursePage } from './../models/iCourse-page';
 
 
-import { ICourse } from '../models/iCourse-model';
+import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/_share/components-material/error-dialog/error-dialog.component';
 import { IErrorsHttpModel } from 'src/app/courses/models/iErrorsHttp-model';
-import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
+import { ICourse } from '../models/iCourse-model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,20 +19,23 @@ export class CoursesService {
   //private readonly API = "http://localhost:8080/api/courses";
  // private readonly API = "api/courses"; //Usaremos o Proxy para resolver o error de CORRs(Corrs é feito por segurança)
  private readonly API = "api/coursesexeption"; //mudamos o ENDPOINT para a versão mais atual do backend
+ private readonly API_WITH_PAGINATOR = "api/coursesexeption/paginator"; //mudamos o ENDPOINT para a versão mais atual do backend
 
   /**Dialog fpoi oserviço criado para abrir a PopUp de error, aqui pelo Service sem ter que ir para compoment */
   constructor(private http: HttpClient, public dialog: MatDialog) { }
 
-  list(): Observable<ICourse[]> {
-    return this.http.get<ICourse[]>(this.API)
+  list(page: number = 0, pageSize: number = 10): Observable<ICoursePage> {
+    // return this.http.get<ICourse[]>(this.API)
+    return this.http.get<ICoursePage>(this.API_WITH_PAGINATOR, { params:{page, pageSize}})
       .pipe(
         first(), //just get 1 subscrition, after that close the conection
-        // delay(1000), // create a delay to see the spinner in front 3s
+        // delay(1000), // create a delay to see the spinner in front 3s"/paginator"
         //tap(localCourses => console.log(localCourses)),
         catchError(e => {
           this.openDialogError({ ...e })
           /**Precisamos devolver um observable, mesmo q seja um Array vazio */
-          return of([])
+
+          return of({ courses:[], page:0, totalElments: 10})
         }))
 
   }

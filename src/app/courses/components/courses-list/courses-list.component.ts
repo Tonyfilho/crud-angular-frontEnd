@@ -5,7 +5,8 @@ import { ICourse } from 'src/app/courses/models/iCourse-model';
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss']
+  styleUrls: ['./courses-list.component.scss'],
+
 })
 export class CoursesListComponent {
 
@@ -16,21 +17,23 @@ export class CoursesListComponent {
   @Output() delete = new EventEmitter<ICourse>();
 
 
+ 
+
   constructor(public dialog: MatDialog,
-    ) { }
+  ) { }
 
 
-    onAdd() {
-      // this.router.navigate(['courses/new']); Criando Rota relativa, independente do nome "Removeremos o courses"
-      this.add.emit(true);
-    }
+  onAdd() {
+    // this.router.navigate(['courses/new']); Criando Rota relativa, independente do nome "Removeremos o courses"
+    this.add.emit(true);
+  }
 
 
-    onEdit(oneCourse: ICourse) {
-      this.edit.emit(oneCourse)
+  onEdit(oneCourse: ICourse) {
+    this.edit.emit(oneCourse)
 
-    }
-    onDelete(course: ICourse) {
+  }
+  onDelete(course: ICourse) {
     this.delete.emit(course);
-    }
+  }
 }
