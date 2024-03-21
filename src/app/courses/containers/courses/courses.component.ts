@@ -63,11 +63,12 @@ export class CoursesComponent {
 
   };
 
- /**PageEvent  é um Objeto que pode ser visto na class PageEvent, setando uma valor padrão o Methodo já não precisa ser setado ficando OPCIONAL  */
-  reflesh(event: PageEvent = {length: 0, pageIndex:0, pageSize:10}) {
+  /**PageEvent  é um Objeto que pode ser visto na class PageEvent, setando um valor padrão o Methodo já não precisa ser setado ficando OPCIONAL this.reflesh()  */
+  reflesh(event: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }) {
     this.cursoPages$ = this.courseService.list(event.pageIndex, event.pageSize).pipe(
       tap(() => {
-         this.pageIndex = event.pageIndex, this.pageSize = event.pageSize
+        this.pageIndex = event.pageIndex; this.pageSize = event.pageSize;
+        console.log("pageSize: ", event.pageSize);
       }),
 
       catchError(e => {
