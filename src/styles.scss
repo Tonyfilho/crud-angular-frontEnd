@@ -1,19 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
 
-@import 'node_modules/@angular/material/_theming.scss';
-@include mat-core();
 
-
-$custom-app-primary: mat-palette($mat-blue); //variavel da cor primaria
-$custom-app-secondaty: mat-palette($mat-indigo, A200, A400, A700); //variavel da cor secudaria
-$custom-app-warn: mat-palette($mat-red); //variavel da cor warning
+ $custom-app-primary: mat.define-palette(mat.$blue-palette); //variavel da cor primaria
+ $custom-app-secondaty: mat.define-palette(mat.$indigo-palette, A200, A400, 700); //variavel da cor secudaria
+ // The warn palette is optional (defaults to red).
+ $custom-app-warn: mat.define-palette(mat.$red-palette); //variavel da cor warning
 
 /* Custom theme*/
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
 
-$custom-theme: mat-light-theme($custom-app-primary,$custom-app-secondaty, $custom-app-warn);
+$custom-theme: mat.define-light-theme(
+  (
+    color: (
+      primary:  $custom-app-primary,
+      accent: $custom-app-secondaty,
+      warn: $custom-app-warn
+    )
+  )
+);
 
 /**Usarewmos um @include para falar para Angular qual temo queremos*/
-@include angular-material-theme($custom-theme);
+
+ @include mat.all-component-themes($custom-theme);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
