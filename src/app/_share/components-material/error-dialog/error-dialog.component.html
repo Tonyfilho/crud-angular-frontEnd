@@ -2,13 +2,13 @@
   <!-- <p>{{ this.data.name +': ' }}  {{ this.data.statusText }} {{ this.data.status }}</p>
   <p>{{ this.data.url }}</p> -->
   <!-- <h1 mat-dialog-title style="color: rgba(255, 0, 0, 0.705)"> -->
-  <h1 mat-dialog-title  {{ this.data.status >=400? style= "color: rgba(255, 0, 0, 0.705)": style="color: rgba(0, 132, 255,0.8)" }}>
+  <h1 mat-dialog-title  {{ this.data.status >=400? style= "color: rgba(255, 0, 0, 0.705)": style="color: rgba(0, 132, 255,0.8)" &#125;&#125;>
     {{ this.data.name + ": " }} {{ this.data.statusText + ": " }}
 
     {{ this.data.status }}
   </h1>
   <div mat-dialog-content>{{ this.data.url }}</div>
   <div mat-dialog-actions class="localButton">
-    <button mat-stroked-button {{ this.data.status >=400? color="accent": color="primary" }} mat-dialog-close>Close</button>
+    <button mat-stroked-button {{ this.data.status >=400? color="accent": color="primary" &#125;&#125; mat-dialog-close>Close</button>
   </div>
 </div>
