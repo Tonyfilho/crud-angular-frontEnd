@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,14 +20,13 @@ import { CoursesService } from '../../services/courses.service';
     styleUrls: ['./courses.component.scss'],
     standalone: true,
     imports: [
-        MatCard,
-        MatToolbar,
-        NgIf,
-        CoursesListComponent,
-        MatPaginator,
-        MatProgressSpinner,
-        AsyncPipe,
-    ],
+    MatCard,
+    MatToolbar,
+    CoursesListComponent,
+    MatPaginator,
+    MatProgressSpinner,
+    AsyncPipe
+],
 })
 export class CoursesComponent {
 

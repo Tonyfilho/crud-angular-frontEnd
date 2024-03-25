@@ -1,4 +1,4 @@
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +20,7 @@ import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
     templateUrl: './course-form.component.html',
     styleUrls: ['./course-form.component.scss'],
     standalone: true,
-    imports: [MatCard, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, NgIf, MatError, MatSelect, MatOption, MatFabButton, MatIcon, NgFor, MatPrefix, MatMiniFabButton, MatCardActions, MatButton]
+    imports: [MatCard, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatError, MatSelect, MatOption, MatFabButton, MatIcon, MatPrefix, MatMiniFabButton, MatCardActions, MatButton]
 })
 export class CourseFormComponent implements OnInit {
   //form!: ICoursesForms;  /**Foi removido a tipagem pois FormsArray não aceita tipagem, isto esta nas DOCs do Angular */

@@ -1,74 +1,84 @@
 
-  <mat-card>
-    <mat-toolbar color="primary">Course Details</mat-toolbar>
-    <mat-card-content>
-      <form action="" [formGroup]="form" class="min-width">
+<mat-card>
+  <mat-toolbar color="primary">Course Details</mat-toolbar>
+  <mat-card-content>
+    <form action="" [formGroup]="form" class="min-width">
 
-          <mat-form-field  class="mat-form-father" >
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Name" formControlName="name" #name/>
-            <mat-hint align="end">{{ name?.value?.length || 0 }} /50</mat-hint>
-            <mat-error *ngIf="this.form.get('name')?.invalid">{{this.formsUtilsService.getErrorMessage(form,'name', 2, 50)}}</mat-error>
-          </mat-form-field>
+      <mat-form-field  class="mat-form-father" >
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" #name/>
+        <mat-hint align="end">{{ name?.value?.length || 0 }} /50</mat-hint>
+        @if (this.form.get('name')?.invalid) {
+          <mat-error>{{this.formsUtilsService.getErrorMessage(form,'name', 2, 50)}}</mat-error>
+        }
+      </mat-form-field>
 
-          <mat-form-field appearance="fill"  class="mat-form-father">
-            <mat-label>Choose one Category</mat-label>
-            <mat-select  formControlName="category">
-              <!-- <mat-option value="null"></mat-option>  foi removido para a validação funcionar -->
-              <mat-option value="front-end">Front-End</mat-option>
-              <mat-option value="back-end">Back-End</mat-option>
-            </mat-select>
-            <mat-error *ngIf="this.form.get('category')?.invalid">{{this.formsUtilsService.getErrorMessage(form, 'category')}}</mat-error>
-          </mat-form-field>
+      <mat-form-field appearance="fill"  class="mat-form-father">
+        <mat-label>Choose one Category</mat-label>
+        <mat-select  formControlName="category">
+          <!-- <mat-option value="null"></mat-option>  foi removido para a validação funcionar -->
+          <mat-option value="front-end">Front-End</mat-option>
+          <mat-option value="back-end">Back-End</mat-option>
+        </mat-select>
+        @if (this.form.get('category')?.invalid) {
+          <mat-error>{{this.formsUtilsService.getErrorMessage(form, 'category')}}</mat-error>
+        }
+      </mat-form-field>
 
-          <!-- Lessons -->
-          <div class="lesson-father">
-            <mat-toolbar color="primary" class="lesson-details">Lessons Details
-              <button mat-fab color="warn" aria-label="Add Lessons" (click)="addNewLesson()"><mat-icon class="mat-18">add</mat-icon> </button>
-            </mat-toolbar>
-            <!-- validação do controls -->
-            <div class="lesson-father-errors">
-              <mat-error *ngIf="this.formsUtilsService.isFormArrayRequired(form, 'lessons')"> Add one Lesson pls</mat-error>
-            </div>
-          </div>
+      <!-- Lessons -->
+      <div class="lesson-father">
+        <mat-toolbar color="primary" class="lesson-details">Lessons Details
+          <button mat-fab color="warn" aria-label="Add Lessons" (click)="addNewLesson()"><mat-icon class="mat-18">add</mat-icon> </button>
+        </mat-toolbar>
+        <!-- validação do controls -->
+        <div class="lesson-father-errors">
+          @if (this.formsUtilsService.isFormArrayRequired(form, 'lessons')) {
+            <mat-error> Add one Lesson pls</mat-error>
+          }
+        </div>
+      </div>
 
-          <div class="div-lesson-father-child">
-          <!-- <table class="lesson-child"   formArrayName="lessons" *ngFor="let item of this.form.get('lessons')?.controls as UntypedFormArray"> -->
-            <table class="table-lesson-child"   formArrayName="lessons" *ngFor="let item of this.getLessonsFormArray(); let i = index">
-              <!-- <tr formGroupName="{{i}}"> ou um ou outro -->
-              <tr [formGroupName]="i">
-                <td>
-                  <mat-form-field class="mat-form-lesson" >
-                    <mat-label>Name Lesson</mat-label>
-                    <input matInput placeholder="Name Lesson"  formControlName="name"/>
-                    <mat-error *ngIf="this.getLessonsFormArray()[i].get('name')?.invalid">{{ this.formsUtilsService.getErrorMessageFromFormArrayField(form, 'lessons', 'name', i)}} </mat-error>
+      <div class="div-lesson-father-child">
+        <!-- <table class="lesson-child"   formArrayName="lessons" *ngFor="let item of this.form.get('lessons')?.controls as UntypedFormArray"> -->
+        @for (item of this.getLessonsFormArray(); track item; let i = $index) {
+          <table class="table-lesson-child"   formArrayName="lessons">
+            <!-- <tr formGroupName="{{i}}"> ou um ou outro -->
+            <tr [formGroupName]="i">
+              <td>
+                <mat-form-field class="mat-form-lesson" >
+                  <mat-label>Name Lesson</mat-label>
+                  <input matInput placeholder="Name Lesson"  formControlName="name"/>
+                  @if (this.getLessonsFormArray()[i].get('name')?.invalid) {
+                    <mat-error>{{ this.formsUtilsService.getErrorMessageFromFormArrayField(form, 'lessons', 'name', i)}} </mat-error>
+                  }
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="mat-form-lesson delete"  >
+                  <mat-label>Youtube Url</mat-label>
+                  <div class="div-button">
+                    <span matTextPrefix>https://youtu.be/</span>
+                    <input matInput placeholder="URL" formControlName="youtubeUrl" />
+                    <button mat-mini-fab color="warn" aria-label="Delete Lessons" class="div-button-button" (click)="deleteNewLesson(i)"><mat-icon class="icon-delete-lesson" >delete</mat-icon> </button>
+                  </div>
+                  @if (this.getLessonsFormArray()[i].get('youtubeUrl')?.invalid) {
+                    <mat-error>{{ this.formsUtilsService.getErrorMessageFromFormArrayField(form, 'lessons', 'youtubeUrl', i) }} </mat-error>
+                  }
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        }
+      </div>
 
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field class="mat-form-lesson delete"  >
-                    <mat-label>Youtube Url</mat-label>
-                    <div class="div-button">
-                      <span matTextPrefix>https://youtu.be/</span>
-                      <input matInput placeholder="URL" formControlName="youtubeUrl" />
-                      <button mat-mini-fab color="warn" aria-label="Delete Lessons" class="div-button-button" (click)="deleteNewLesson(i)"><mat-icon class="icon-delete-lesson" >delete</mat-icon> </button>
-                    </div>
-                    <mat-error *ngIf="this.getLessonsFormArray()[i].get('youtubeUrl')?.invalid">{{ this.formsUtilsService.getErrorMessageFromFormArrayField(form, 'lessons', 'youtubeUrl', i) }} </mat-error>
-                  </mat-form-field>
-                </td>
-
-              </tr>
-            </table>
-          </div>
-
-      </form>
-    </mat-card-content>
-    <mat-card-actions   >
-      <!-- <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ this.form.get('name')?.invalid || this.form.get('category')?.invalid }}" >{{ this.localButton }}</button> -->
-      <!-- <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ !this.form.valid }}" >{{ this.localButton }}</button> -->
-      <button mat-raised-button color="primary" (click)="onSubmit()" >{{ this.localButton }}</button>
-      <button mat-raised-button (click)="onCancel()">Cancel</button>
-    </mat-card-actions>
-  </mat-card>
+    </form>
+  </mat-card-content>
+  <mat-card-actions   >
+    <!-- <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ this.form.get('name')?.invalid || this.form.get('category')?.invalid }}" >{{ this.localButton }}</button> -->
+    <!-- <button mat-raised-button color="primary" (click)="onSubmit()" disabled="{{ !this.form.valid }}" >{{ this.localButton }}</button> -->
+    <button mat-raised-button color="primary" (click)="onSubmit()" >{{ this.localButton }}</button>
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
 
 
