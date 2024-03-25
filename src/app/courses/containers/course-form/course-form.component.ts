@@ -1,16 +1,26 @@
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ICourse } from 'src/app/courses/models/iCourse-model';
 import { ILessoForms, ILesson } from 'src/app/courses/models/iLesson-model';
 import { FormsUtilsService } from 'src/app/_share/forms-validations/forms-utils.service';
 import { CoursesService } from '../../services/courses.service';
+import { MatIcon } from '@angular/material/icon';
+import { MatFabButton, MatMiniFabButton, MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel, MatHint, MatError, MatPrefix } from '@angular/material/form-field';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 
 @Component({
-  selector: 'app-course-form',
-  templateUrl: './course-form.component.html',
-  styleUrls: ['./course-form.component.scss']
+    selector: 'app-course-form',
+    templateUrl: './course-form.component.html',
+    styleUrls: ['./course-form.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, NgIf, MatError, MatSelect, MatOption, MatFabButton, MatIcon, NgFor, MatPrefix, MatMiniFabButton, MatCardActions, MatButton]
 })
 export class CourseFormComponent implements OnInit {
   //form!: ICoursesForms;  /**Foi removido a tipagem pois FormsArray não aceita tipagem, isto esta nas DOCs do Angular */

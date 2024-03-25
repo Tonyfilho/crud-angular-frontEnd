@@ -23,18 +23,16 @@ const ROUTERS_COURSES: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    CoursesComponent,
-    CourseFormComponent,
-    CoursesListComponent
-  ],
-  imports: [
-    CommonModule,
-    AppMaterialModule,
-    HttpClientModule,
-    SharedModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(ROUTERS_COURSES),
-  ]
+    imports: [
+        CommonModule,
+        AppMaterialModule,
+        HttpClientModule,
+        SharedModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(ROUTERS_COURSES),
+        CoursesComponent,
+        CourseFormComponent,
+        CoursesListComponent,
+    ]
 })
 export class CoursersModule { }

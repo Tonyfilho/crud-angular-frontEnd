@@ -10,17 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
-  declarations: [
-    ErrorDialogComponent,
-    CategoryPipe,
-    ConfirmationDialogComponent
-  ],
-  imports: [
-    CommonModule,
-    AppMaterialModule,
-    HttpClientModule
-
-  ],
-  exports: [ErrorDialogComponent, CategoryPipe, ConfirmationDialogComponent]
+    imports: [
+        CommonModule,
+        AppMaterialModule,
+        HttpClientModule,
+        ErrorDialogComponent,
+        CategoryPipe,
+        ConfirmationDialogComponent
+    ],
+    exports: [ErrorDialogComponent, CategoryPipe, ConfirmationDialogComponent]
 })
 export class SharedModule { }
