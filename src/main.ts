@@ -6,9 +6,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app/app-routing.module';
-import { AppComponent } from './app/app.component';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { AppComponent } from './app/app.component';
 import { APP_ROUTERS } from './app/app.routes';
 
 
