@@ -1,18 +1,18 @@
-import { Component, EventEmitter, Input, numberAttribute, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, catchError, first, tap, throwError } from 'rxjs';
-import { ICourse } from '../../models/iCourse-model';
-import { CoursesService } from '../../services/courses.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+import { MatCard } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
-import { ICoursePage } from '../../models/iCourse-page';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatToolbar } from '@angular/material/toolbar';
-import { MatCard } from '@angular/material/card';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+import { ConfirmationDialogComponent } from 'src/app/_share/components-material/confirmation-dialog/confirmation-dialog.component';
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
+import { ICourse } from '../../models/iCourse-model';
+import { ICoursePage } from '../../models/iCourse-page';
+import { CoursesService } from '../../services/courses.service';
 
 @Component({
     selector: 'app-coursers',
